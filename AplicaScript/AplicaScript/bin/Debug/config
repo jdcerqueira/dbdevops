@@ -1,5 +1,5 @@
 branch=release/SalaLimpa
-connection=1acpjw008\sql17
+connection=DESKTOP-SCVFDSG\SQL2019A
 aplicaScript=Devops\AplicaScript
 scriptCompleto=Devops\ScriptCompleto
 scriptAplicado=Devops\ScriptAplicado

@@ -1,0 +1,7 @@
+E:\GitHub\dbdevops\Pipeline\Pipeline\bin\Debug\Pipeline.exe.config
+E:\GitHub\dbdevops\Pipeline\Pipeline\bin\Debug\Pipeline.exe
+E:\GitHub\dbdevops\Pipeline\Pipeline\bin\Debug\Pipeline.pdb
+E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.csproj.AssemblyReference.cache
+E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.csproj.CoreCompileInputs.cache
+E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.exe
+E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.pdb

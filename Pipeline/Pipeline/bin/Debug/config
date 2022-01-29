@@ -1,0 +1,7 @@
+branch=release/SalaLimpa
+connection=DESKTOP-SCVFDSG\SQL2019A
+aplicaScript=Devops\AplicaScript
+scriptCompleto=Devops\ScriptCompleto
+scriptAplicado=Devops\ScriptAplicado
+log=Devops\Log
+baseControladora=macaquinho

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 18.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Roteiro", "01-Roteiro", "{1FDBE303-54BE-4B02-9FBD-D5707DF17C5D}"
+	ProjectSection(SolutionItems) = preProject
+		01-Roteiro\Roteiro.txt = 01-Roteiro\Roteiro.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Scripts", "02-Scripts", "{CE5CA745-9689-4F46-AE50-F6603BEE1AED}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "IDA", "02-Scripts\IDA\IDA.ssmssqlproj", "{54392CD2-378C-4625-9D98-B63000E79758}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54392CD2-378C-4625-9D98-B63000E79758}.Default|Default.ActiveCfg = Default
+		{AC9A41A3-669F-4BC7-A07F-717ABC1F7695}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{54392CD2-378C-4625-9D98-B63000E79758} = {CE5CA745-9689-4F46-AE50-F6603BEE1AED}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {287918D2-C890-421F-9875-D3542175C1E3}
+	EndGlobalSection
+EndGlobal
