@@ -1,0 +1,7 @@
+branch=release/SalaLimpa
+connection=1acpjw008\sql17
+aplicaScript=Devops\AplicaScript
+scriptCompleto=Devops\ScriptCompleto
+scriptAplicado=Devops\ScriptAplicado
+log=Devops\Log
+baseControladora=macaquinho

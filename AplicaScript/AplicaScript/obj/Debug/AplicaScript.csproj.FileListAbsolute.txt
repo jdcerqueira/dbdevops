@@ -1,0 +1,7 @@
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\bin\Debug\AplicaScript.exe.config
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\bin\Debug\AplicaScript.exe
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\bin\Debug\AplicaScript.pdb
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\obj\Debug\AplicaScript.csproj.CoreCompileInputs.cache
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\obj\Debug\AplicaScript.exe
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\obj\Debug\AplicaScript.pdb
+D:\Bitbucket\my-personal-repository\meus_projetos\DBDEVOPS\AplicaScript\AplicaScript\obj\Debug\AplicaScript.csproj.AssemblyReference.cache

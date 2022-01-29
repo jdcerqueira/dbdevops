@@ -1,0 +1,52 @@
+Roteiro de Controle de Base de Dados
+
+1. Criar base de dados para controle de sequência da execução dos scripts.
+1.1. Base de dados sugerida: DBDEVOPS
+1.1.1. Tabela de versionamento:
+
+Tabela: dbo.Versionamento
+Versao_Script	| INT			| PRIMARY KEY
+Script			| VARCHAR(Max)	|
+Base_Dados		| SYSNAME		|
+Data_Execucao	| DATETIME		|
+Usuario			| SYSNAME		|
+Servidor		| SYSNAME		|
+
+2. Sequencia de validação do script:
+2.1. Valida se a base de dados DBDEVOPS existe no ambiente;
+2.1.1. Se não existir, cria a base;
+2.1.2. Se existir, verifica a última versão aplicada, e aplica a sequência até chegar na última versão do que existe no repositório.
+
+3. Estrutura no GIT
+3.1. Deverão existir 4 pastas:
+3.1.1. Devops/AplicaScripts;
+3.1.1.2. Na pasta acima deve existir o script parcial com a versão;
+3.1.1.2.1. O nome do arquivo deverá ser o mesmo da versão + base de dados, exemplo: v1_NEMOD000.sql
+3.1.2. Devops/ScriptsAplicados;
+3.1.2.1. Na pasta acima serão registrados todos os scripts já executados a partir da pasta "AplicaScripts"
+3.1.3. Devops/ScriptCompleto;
+3.1.3.1. Na pasta acima teremos um único script composto por todos os scripts parciais gerados até o presente momento na base de dados
+3.1.4. Devops/Log;
+3.1.4.1. Na pasta acima teremos o log de execução de cada versão no ambiente.
+
+4. Automatização do processo de atualização do ambiente:
+4.1. Leitura do repositório git na branch que representa aquele ambiente, por exemplo: "release/SalaLimpa";
+4.2. Será validada a pasta "Devops/AplicaScripts";
+4.3. Os scripts encontrados na pasta acima serão validados no ambiente se são versões compatíveis com a versão atual da base de dados.
+4.4. Os scripts serão executados e gerados os logs na pasta "Devops/Log", o arquivo de log terá o mesmo nome do arquivo parcial, porém com a extensão "log".
+4.4. No caso de falha do script, o mesmo será eliminado da pasta "AplicaScripts" e será logado com detalhes no arquivo de Log, e não será registrada a versão sugerida;
+4.5. No caso de sucesso, será registrada a versão do script na base de dados, e no script completo da base armazenada na pasta "ScriptCompleto".
+
+
+-- Regras da aplicação:
+* Minha aplicação precisa estar na pasta de repositório;
+* Percorrer a pasta de scripts para aplicar;
+* Na pasta de ScriptCompleto, só poderemos ter um arquivo, o script_completo.sql
+* Ler arquivo de script_completo.sql
+* Aplicar os scripts parciais na pasta AplicarScripts
+* Movimentar os scripts parciais para a pasta ScriptAplicado
+* Validar se o script que será aplicado, já existe a mesma versão em aplicados e na base de dados.
+* Verificar se existe a base de dados DBDEVOPS
+* Especificar o log
+* Quando não existir a base, serão aplicados todos os scripts que estiverem na pasta "ScriptsAplicados" na ordem de versão, e serão gerados os registros de verão na base versionadora.
+* Após equalizar a base com a última versão, executar os scripts q estão na pendência de aplicar.
