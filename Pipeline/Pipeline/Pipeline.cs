@@ -11,6 +11,11 @@ namespace Pipeline
     {
         public Pipeline(Configuracao _configuracao)
         {
+            /*
+             * Neste trecho inicial, o pipeline irá organizar a base de dados controladora de versões.
+             * Serão aplicadas as versões que deveria já existir no servidor e na base de dados informada no script;
+             * Após o ajuste no ambiente, tornando o ambiente confiável as versões já existentes na base de dados, iremos para o fluxo de aplicar os scripts pendentes.
+             */
             //Verifica a base versionadora
             if (!existeBaseControladora(_configuracao))
             {
@@ -18,42 +23,84 @@ namespace Pipeline
                 criaEstruturaBaseControladora(_configuracao);
             }
 
-            //Caso a base versionadora esteja vazia, serão aplicados todos os scripts existentes na pasta ´ScriptsAplicados´
-            if(versaoAtualAmbiente(_configuracao) == 0)
-            {
-                foreach(Scripts aplicado in Scripts.listaScriptsAplicados(_configuracao).scripts)
-                    aplicaScript(_configuracao, aplicado, new Scripts.Info(aplicado));
-            }
+            // Aplica os scripts já controlados pelo repositório como "Aplicados" na base de dados em questão
+            foreach (Scripts aplicado in Scripts.listaScriptsAplicados(_configuracao, versaoAtualAmbiente(_configuracao)).scripts)
+                aplicaScript(_configuracao, aplicado, new Scripts.Info(aplicado));
+
+            /*
+             * Termina aqui o primeiro trecho
+             */
+
+            /*
+             * Trecho de execução dos scripts pendentes.
+             */
+            
         }
 
         private Boolean existeBaseControladora(Configuracao _configuracao)
         {
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Verificando se a base {_configuracao.baseControladora} existe...");
+
             SqlDataReader result = DAO.executaComandoResultSet(DAO.connection(_configuracao), Util.Constantes.QueriesEstaticas.verificaBaseControladora(_configuracao));
             if (result.Read())
                 if (result[0].ToString() != "")
+                {
+                    // Precisa aplicar o log aqui
+                    Console.WriteLine($"A base {_configuracao.baseControladora} existe.");
                     return true;
+                }
 
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"A base {_configuracao.baseControladora} não existe.");
             return false;
         }
 
         private void criaBaseControladora(Configuracao _configuracao)
         {
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Criando a base {_configuracao.baseControladora}...");
+            
             DAO.executaComando(DAO.connection(_configuracao), Util.Constantes.QueriesEstaticas.criaBaseControladora(_configuracao));
+
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Base {_configuracao.baseControladora} criada com sucesso.");
         }
 
         private void criaEstruturaBaseControladora(Configuracao _configuracao)
         {
-            DAO.executaComando(DAO.connection(_configuracao), Util.Constantes.QueriesEstaticas.criaEstruturaBaseControladora());
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Criando estrutura de versionamento na base {_configuracao.baseControladora}...");
+
+            DAO.executaComando(DAO.connection(_configuracao, _configuracao.baseControladora), Util.Constantes.QueriesEstaticas.criaEstruturaBaseControladora());
+
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Estrutura de versionamento na base {_configuracao.baseControladora} criada com sucesso.");
         }
 
-        private int versaoAtualAmbiente(Configuracao _configuracao)
+        private Dictionary<String, int> versaoAtualAmbiente(Configuracao _configuracao)
         {
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Pesquisa de versão dos scripts já aplicados no servidor {_configuracao.connection}.");
+            Dictionary<String, int> retorno = new Dictionary<String, int>();
+
             SqlDataReader result = DAO.executaComandoResultSet(DAO.connection(_configuracao,_configuracao.baseControladora), Util.Constantes.QueriesEstaticas.versaoAtualAmbiente());
             if (result == null)
-                return 0;
+            {
+                // Precisa aplicar o log aqui
+                Console.WriteLine($"Retornou null na pesquisa.");
+                return retorno;
+            }
 
-            result.Read();
-            return Int32.Parse(result[0].ToString());
+            while (result.Read())
+            {
+                retorno.Add(result[1].ToString(), Int32.Parse(result[0].ToString()));
+                // Precisa aplicar o log aqui
+                Console.WriteLine($"Retornou Base: {result[1].ToString()} - Versão: {result[0].ToString()} na pesquisa.");
+            }
+                
+
+            return retorno;
         }
 
         private void aplicaScript(Configuracao _configuracao, Scripts _script, Scripts.Info _info)
@@ -63,7 +110,12 @@ namespace Pipeline
                 conteudoArquivo.AppendLine(linha);
 
             DAO.executaComando(DAO.connection(_configuracao),conteudoArquivo.ToString());
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Aplicado o script {_script.nomeArquivo}.");
+
             DAO.executaComando(DAO.connection(_configuracao, _configuracao.baseControladora), Util.Constantes.QueriesEstaticas.aplicaVersaoScript(_info, conteudoArquivo.ToString(), _configuracao));
+            // Precisa aplicar o log aqui
+            Console.WriteLine($"Registrada a versão do script {_script.nomeArquivo}.");
         }
     }
 }

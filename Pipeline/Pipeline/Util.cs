@@ -32,17 +32,18 @@ namespace Pipeline
                 {
                     return $"CREATE TABLE dbo.Versionamento" +
                         $"(" +
-                        $"Versao_Script INT PRIMARY KEY," +
+                        $"Versao_Script INT," +
                         $"Script VARCHAR(MAX)," +
                         $"Base_Dados SYSNAME," +
                         $"Data_Execucao DATETIME DEFAULT GETDATE()," +
                         $"Usuario SYSNAME," +
-                        $"Servidor SYSNAME)";
+                        $"Servidor SYSNAME," +
+                        $"CONSTRAINT PK_Versionamento PRIMARY KEY(Versao_Script,Base_Dados))";
                 }
 
                 public static String versaoAtualAmbiente()
                 {
-                    return $"SELECT Versao_Script FROM dbo.Versionamento";
+                    return $"SELECT MAX(Versao_Script) UltimaVersao, Base_Dados FROM dbo.Versionamento GROUP BY Base_Dados";
                 }
 
                 public static String aplicaVersaoScript(Scripts.Info _info, String conteudoScript, Configuracao _configuracao)
