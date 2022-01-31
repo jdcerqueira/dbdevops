@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pipeline", "Pipeline\Pipeline.csproj", "{806986DE-E990-4922-B29C-B5A5EE73FDA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuracoes", "Configuracoes\Configuracoes.csproj", "{8AB9A3A7-8725-422A-840A-96409F0B64E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pipeline_config", "pipeline_config\pipeline_config.csproj", "{4689B510-0416-4FF6-A8C2-8815CE4088A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{806986DE-E990-4922-B29C-B5A5EE73FDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{806986DE-E990-4922-B29C-B5A5EE73FDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{806986DE-E990-4922-B29C-B5A5EE73FDA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB9A3A7-8725-422A-840A-96409F0B64E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB9A3A7-8725-422A-840A-96409F0B64E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB9A3A7-8725-422A-840A-96409F0B64E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB9A3A7-8725-422A-840A-96409F0B64E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4689B510-0416-4FF6-A8C2-8815CE4088A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4689B510-0416-4FF6-A8C2-8815CE4088A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4689B510-0416-4FF6-A8C2-8815CE4088A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4689B510-0416-4FF6-A8C2-8815CE4088A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

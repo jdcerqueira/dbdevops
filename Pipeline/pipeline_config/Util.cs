@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace Pipeline
+namespace pipeline_config
 {
     public class Util
     {
@@ -58,7 +58,7 @@ namespace Pipeline
                         $"{_info.versao}," +
                         $"'{Util.Criptografia.Encrypt(conteudoScript,Util.Constantes.keyCripto,true)}'," +
                         $"'{_info.baseDados}'," +
-                        $"'sa'," +
+                        $"'{_configuracao.usuarioBase}'," +
                         $"'{_configuracao.connection}'" +
                         ")";
                 }
@@ -82,6 +82,11 @@ namespace Pipeline
             {
                 if (!Directory.Exists(caminhoPasta))
                     Directory.CreateDirectory(caminhoPasta);
+            }
+
+            public static void gravaArquivo(String caminho, String conteudo)
+            {
+                File.WriteAllText(caminho,conteudo);
             }
         }
 

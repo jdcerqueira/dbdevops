@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pipeline_config;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,9 +14,10 @@ namespace Pipeline
         {
             /*
              * Neste trecho inicial, o pipeline irá organizar a base de dados controladora de versões.
-             * Serão aplicadas as versões que deveria já existir no servidor e na base de dados informada no script;
+             * Serão aplicadas as versões que deveriam já existir no servidor e na base de dados informada no script.
              * Após o ajuste no ambiente, tornando o ambiente confiável as versões já existentes na base de dados, iremos para o fluxo de aplicar os scripts pendentes.
              */
+
             //Verifica a base versionadora
             if (!existeBaseControladora(_configuracao))
             {
@@ -27,14 +29,28 @@ namespace Pipeline
             foreach (Scripts aplicado in Scripts.listaScriptsAplicados(_configuracao, versaoAtualAmbiente(_configuracao)).scripts)
                 aplicaScript(_configuracao, aplicado, new Scripts.Info(aplicado));
 
-            /*
-             * Termina aqui o primeiro trecho
-             */
+            /**********************************
+             * Termina aqui o primeiro trecho *
+             **********************************/
 
             /*
              * Trecho de execução dos scripts pendentes.
              */
-            
+
+            // Verifica se os scripts para aplicar estão na versão correta
+            if (verificaVersaoScriptParaAplicar(_configuracao))
+            {
+
+            }
+
+
+
+        }
+
+        private Boolean verificaVersaoScriptParaAplicar(Configuracao _configuracao)
+        {
+
+            return false;
         }
 
         private Boolean existeBaseControladora(Configuracao _configuracao)

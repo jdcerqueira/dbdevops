@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pipeline
+namespace pipeline_config
 {
     public class Configuracao
     {
@@ -16,6 +16,8 @@ namespace Pipeline
         public String scriptAplicado;
         public String log;
         public String baseControladora;
+        public String usuarioBase;
+        public String senhaBase;
         public Dictionary<String, int> versaoBaseAplicada = new Dictionary<String, int>();
 
         public Configuracao()
@@ -32,6 +34,8 @@ namespace Pipeline
                 this.scriptAplicado = infoLinhaArquivo[0] == "scriptAplicado" ? infoLinhaArquivo[1] : this.scriptAplicado;
                 this.log = infoLinhaArquivo[0] == "log" ? infoLinhaArquivo[1] : this.log;
                 this.baseControladora = infoLinhaArquivo[0] == "baseControladora" ? infoLinhaArquivo[1] : this.baseControladora;
+                this.usuarioBase = infoLinhaArquivo[0] == "usuarioBase" ? infoLinhaArquivo[1] : this.usuarioBase;
+                this.senhaBase = infoLinhaArquivo[0] == "senhaBase" ? Util.Criptografia.Decrypt(infoLinhaArquivo[1].Replace("(***Igual***)","="),Util.Constantes.keyCripto,true) : this.senhaBase;
             }
 
             //preenche dicionário de bases e versionamentos na encontrados na pasta de aplicados
@@ -61,6 +65,31 @@ namespace Pipeline
                 $"ScriptAplicado: {this.scriptAplicado}\n" +
                 $"Log: {this.log}\n" +
                 $"BaseControladora: {this.baseControladora}";
+        }
+
+        public static void salvarConfiguracao
+            (String _branch,
+            String _connection,
+            String _aplicaScript,
+            String _scriptCompleto,
+            String _scriptAplicado,
+            String _log,
+            String _baseControladora,
+            String _usuarioBase,
+            String _senhaBase)
+        {
+            StringBuilder configuracao = new StringBuilder();
+            configuracao.AppendLine($"branch={_branch}");
+            configuracao.AppendLine($"connection={_connection}");
+            configuracao.AppendLine($"aplicaScript={_aplicaScript}");
+            configuracao.AppendLine($"scriptCompleto={_scriptCompleto}");
+            configuracao.AppendLine($"scriptAplicado={_scriptAplicado}");
+            configuracao.AppendLine($"log={_log}");
+            configuracao.AppendLine($"baseControladora={_baseControladora}");
+            configuracao.AppendLine($"usuarioBase={_usuarioBase}");
+            configuracao.AppendLine($"senhaBase={Util.Criptografia.Encrypt(_senhaBase,Util.Constantes.keyCripto,true).Replace("=","(***Igual***)")}");
+
+            Util.Arquivos.gravaArquivo(Util.Constantes.arquivoConfiguracao,configuracao.ToString());
         }
     }
 }

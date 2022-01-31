@@ -4,4 +4,6 @@ aplicaScript=Devops\AplicaScript
 scriptCompleto=Devops\ScriptCompleto
 scriptAplicado=Devops\ScriptAplicado
 log=Devops\Log
-baseControladora=macaquinho
+baseControladora=Devops
+usuarioBase=aplicaDevops
+senhaBase=8bpLJVB+RNsOPuro0dAWcA(***Igual***)(***Igual***)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pipeline
+namespace pipeline_config
 {
     public class DAO
     {
@@ -13,7 +13,7 @@ namespace Pipeline
         {
             try
             {
-                String strConnection = $@"Server = {configuracao.connection}; Database = master; Trusted_Connection = True;";
+                String strConnection = $@"Server = {configuracao.connection}; Database = master; User Id={configuracao.usuarioBase}; Password={configuracao.senhaBase}";
                 return new SqlConnection(strConnection);
             }
             catch (SqlException sq)
