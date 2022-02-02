@@ -25,6 +25,21 @@ namespace Configuracoes
             verificaBotaoSalvar();
         }
 
+        private void carregaDataGridViewScriptsJaAplicados()
+        {
+            dgvScriptsJaAplicados.ColumnCount = 1;
+            dgvScriptsJaAplicados.Rows.Clear();
+            dgvScriptsJaAplicados.Columns[0].HeaderText = "Scripts";
+            dgvScriptsJaAplicados.Columns[0].Name = "Scripts";
+            dgvScriptsJaAplicados.AllowUserToAddRows = false;
+            dgvScriptsJaAplicados.ReadOnly = true;
+
+            foreach (Scripts item in config.arquivosScriptsAplicados.scripts)
+                dgvScriptsJaAplicados.Rows.Add(item.nomeArquivo);
+
+            dgvScriptsJaAplicados.Refresh();
+        }
+
         private void verificaBotaoSalvar()
         {
             btnSalvar.Enabled = acao;
@@ -45,6 +60,8 @@ namespace Configuracoes
             txtBaseVersionadora.Text = config.baseControladora;
             txtUsuarioBase.Text = config.usuarioBase;
             txtSenhaBase.Text = config.senhaBase;
+
+            carregaDataGridViewScriptsJaAplicados();
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

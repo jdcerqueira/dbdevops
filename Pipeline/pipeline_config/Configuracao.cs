@@ -19,9 +19,12 @@ namespace pipeline_config
         public String usuarioBase;
         public String senhaBase;
         public Dictionary<String, int> versaoBaseAplicada = new Dictionary<String, int>();
+        public Scripts.ScriptsAplicados arquivosScriptsAplicados = new Scripts.ScriptsAplicados();
 
         public Configuracao()
         {
+            arquivosScriptsAplicados.scripts = new List<Scripts>();
+
             //carrega arquivo configuração
             foreach (String linhaArquivo in Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao))
             {
@@ -39,20 +42,32 @@ namespace pipeline_config
             }
 
             //preenche dicionário de bases e versionamentos na encontrados na pasta de aplicados
-            foreach(FileInfo arquivo in Util.Arquivos.listaArquivosPasta(this.scriptAplicado))
-            {
-                int versao = 0;
-                Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+            FileInfo[] arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptAplicado);
 
-                if(!versaoBaseAplicada.ContainsKey(info.baseDados))
-                    versaoBaseAplicada.Add(info.baseDados, info.versao);
-                else
+            if(arquivosNaPasta != null)
+            {
+                foreach (FileInfo arquivo in arquivosNaPasta)
                 {
-                    versaoBaseAplicada.TryGetValue(info.baseDados, out versao);
-                    if (versao < info.versao)
-                        versaoBaseAplicada[info.baseDados] = info.versao;
+                    int versao = 0;
+
+                    if(arquivo != null)
+                    {
+                        Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+                        arquivosScriptsAplicados.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+
+
+                        if (!versaoBaseAplicada.ContainsKey(info.baseDados))
+                            versaoBaseAplicada.Add(info.baseDados, info.versao);
+                        else
+                        {
+                            versaoBaseAplicada.TryGetValue(info.baseDados, out versao);
+                            if (versao < info.versao)
+                                versaoBaseAplicada[info.baseDados] = info.versao;
+                        }
+                    }
                 }
             }
+            
         }
 
         override

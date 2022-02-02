@@ -14,7 +14,7 @@ namespace Pipeline
         {
             //Carregar arquivo de configuracao
             //Inicia o pipeline
-            new Pipeline(new Configuracao());
+            //new Pipeline(new Configuracao());
         }
     }
 }

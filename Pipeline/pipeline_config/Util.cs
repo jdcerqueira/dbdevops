@@ -69,19 +69,36 @@ namespace pipeline_config
         {
             public static String[] carregaConteudoArquivo(String arquivo)
             {
+                validaArquivo(arquivo);
                 return File.ReadAllLines(arquivo);
+            }
+
+            public static void validaArquivo(String arquivo)
+            {
+                if (!File.Exists(arquivo))
+                {
+                    var criado = File.Create(arquivo);
+                    criado.Close();
+                }
             }
 
             public static FileInfo[] listaArquivosPasta(String caminhoPasta)
             {
-                validaDiretorio(caminhoPasta);
-                return new DirectoryInfo(caminhoPasta).GetFiles("*.sql").OrderBy(file=>file.Name).ToArray();
+                if(validaDiretorio(caminhoPasta))
+                    return new DirectoryInfo(caminhoPasta).GetFiles("*.sql").OrderBy(file=>file.Name).ToArray();
+
+                return new FileInfo[1];
             }
 
-            public static void validaDiretorio(String caminhoPasta)
+            public static Boolean validaDiretorio(String caminhoPasta)
             {
+                if (caminhoPasta == null || caminhoPasta == "")
+                    return false;
+                
                 if (!Directory.Exists(caminhoPasta))
                     Directory.CreateDirectory(caminhoPasta);
+
+                return true;
             }
 
             public static void gravaArquivo(String caminho, String conteudo)

@@ -51,7 +51,22 @@ namespace Configuracoes
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tabControleScripts = new System.Windows.Forms.TabControl();
+            this.tabScriptsAplicar = new System.Windows.Forms.TabPage();
+            this.tabScriptCompleto = new System.Windows.Forms.TabPage();
+            this.tabScriptsJaAplicados = new System.Windows.Forms.TabPage();
+            this.dgvScriptCompleto = new System.Windows.Forms.DataGridView();
+            this.dgvScriptsAplicar = new System.Windows.Forms.DataGridView();
+            this.dgvScriptsJaAplicados = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tabControleScripts.SuspendLayout();
+            this.tabScriptsAplicar.SuspendLayout();
+            this.tabScriptCompleto.SuspendLayout();
+            this.tabScriptsJaAplicados.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsAplicar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -256,11 +271,91 @@ namespace Configuracoes
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tabControleScripts);
             this.groupBox2.Location = new System.Drawing.Point(414, 13);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(374, 251);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
+            // 
+            // tabControleScripts
+            // 
+            this.tabControleScripts.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControleScripts.Controls.Add(this.tabScriptsAplicar);
+            this.tabControleScripts.Controls.Add(this.tabScriptCompleto);
+            this.tabControleScripts.Controls.Add(this.tabScriptsJaAplicados);
+            this.tabControleScripts.Location = new System.Drawing.Point(6, 12);
+            this.tabControleScripts.Multiline = true;
+            this.tabControleScripts.Name = "tabControleScripts";
+            this.tabControleScripts.SelectedIndex = 0;
+            this.tabControleScripts.Size = new System.Drawing.Size(362, 233);
+            this.tabControleScripts.TabIndex = 0;
+            // 
+            // tabScriptsAplicar
+            // 
+            this.tabScriptsAplicar.Controls.Add(this.dgvScriptsAplicar);
+            this.tabScriptsAplicar.Location = new System.Drawing.Point(4, 4);
+            this.tabScriptsAplicar.Name = "tabScriptsAplicar";
+            this.tabScriptsAplicar.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScriptsAplicar.Size = new System.Drawing.Size(354, 207);
+            this.tabScriptsAplicar.TabIndex = 0;
+            this.tabScriptsAplicar.Text = "Scripts para Aplicar";
+            this.tabScriptsAplicar.UseVisualStyleBackColor = true;
+            // 
+            // tabScriptCompleto
+            // 
+            this.tabScriptCompleto.Controls.Add(this.dgvScriptCompleto);
+            this.tabScriptCompleto.Location = new System.Drawing.Point(4, 4);
+            this.tabScriptCompleto.Name = "tabScriptCompleto";
+            this.tabScriptCompleto.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScriptCompleto.Size = new System.Drawing.Size(354, 207);
+            this.tabScriptCompleto.TabIndex = 1;
+            this.tabScriptCompleto.Text = "Script Completo";
+            this.tabScriptCompleto.UseVisualStyleBackColor = true;
+            // 
+            // tabScriptsJaAplicados
+            // 
+            this.tabScriptsJaAplicados.Controls.Add(this.dgvScriptsJaAplicados);
+            this.tabScriptsJaAplicados.Location = new System.Drawing.Point(4, 4);
+            this.tabScriptsJaAplicados.Name = "tabScriptsJaAplicados";
+            this.tabScriptsJaAplicados.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScriptsJaAplicados.Size = new System.Drawing.Size(354, 207);
+            this.tabScriptsJaAplicados.TabIndex = 2;
+            this.tabScriptsJaAplicados.Text = "Scripts já Aplicados";
+            this.tabScriptsJaAplicados.UseVisualStyleBackColor = true;
+            // 
+            // dgvScriptCompleto
+            // 
+            this.dgvScriptCompleto.AllowUserToAddRows = false;
+            this.dgvScriptCompleto.AllowUserToDeleteRows = false;
+            this.dgvScriptCompleto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvScriptCompleto.Location = new System.Drawing.Point(6, 6);
+            this.dgvScriptCompleto.Name = "dgvScriptCompleto";
+            this.dgvScriptCompleto.ReadOnly = true;
+            this.dgvScriptCompleto.Size = new System.Drawing.Size(342, 195);
+            this.dgvScriptCompleto.TabIndex = 0;
+            // 
+            // dgvScriptsAplicar
+            // 
+            this.dgvScriptsAplicar.AllowUserToAddRows = false;
+            this.dgvScriptsAplicar.AllowUserToDeleteRows = false;
+            this.dgvScriptsAplicar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvScriptsAplicar.Location = new System.Drawing.Point(6, 6);
+            this.dgvScriptsAplicar.Name = "dgvScriptsAplicar";
+            this.dgvScriptsAplicar.ReadOnly = true;
+            this.dgvScriptsAplicar.Size = new System.Drawing.Size(342, 195);
+            this.dgvScriptsAplicar.TabIndex = 1;
+            // 
+            // dgvScriptsJaAplicados
+            // 
+            this.dgvScriptsJaAplicados.AllowUserToAddRows = false;
+            this.dgvScriptsJaAplicados.AllowUserToDeleteRows = false;
+            this.dgvScriptsJaAplicados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvScriptsJaAplicados.Location = new System.Drawing.Point(6, 6);
+            this.dgvScriptsJaAplicados.Name = "dgvScriptsJaAplicados";
+            this.dgvScriptsJaAplicados.ReadOnly = true;
+            this.dgvScriptsJaAplicados.Size = new System.Drawing.Size(342, 195);
+            this.dgvScriptsJaAplicados.TabIndex = 1;
             // 
             // frmConfiguracao
             // 
@@ -278,6 +373,14 @@ namespace Configuracoes
             this.Text = "Configuração";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.tabControleScripts.ResumeLayout(false);
+            this.tabScriptsAplicar.ResumeLayout(false);
+            this.tabScriptCompleto.ResumeLayout(false);
+            this.tabScriptsJaAplicados.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsAplicar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -306,6 +409,13 @@ namespace Configuracoes
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabControl tabControleScripts;
+        private System.Windows.Forms.TabPage tabScriptsAplicar;
+        private System.Windows.Forms.TabPage tabScriptCompleto;
+        private System.Windows.Forms.TabPage tabScriptsJaAplicados;
+        private System.Windows.Forms.DataGridView dgvScriptsAplicar;
+        private System.Windows.Forms.DataGridView dgvScriptCompleto;
+        private System.Windows.Forms.DataGridView dgvScriptsJaAplicados;
     }
 }
 

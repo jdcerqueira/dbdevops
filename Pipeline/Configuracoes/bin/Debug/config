@@ -1,0 +1,9 @@
+branch=
+connection=DESKTOP-SCVFDSG\SQL2019A
+aplicaScript=ScriptsParaAplicar
+scriptCompleto=ScriptCompleto
+scriptAplicado=ScriptsJaAplicados
+log=LogExecucao
+baseControladora=DATADEVOPS
+usuarioBase=
+senhaBase=CG1CvEDyytg(***Igual***)
