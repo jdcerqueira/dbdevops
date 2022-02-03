@@ -40,6 +40,36 @@ namespace Configuracoes
             dgvScriptsJaAplicados.Refresh();
         }
 
+        private void carregaDataGridViewScriptsParaAplicar()
+        {
+            dgvScriptsParaAplicar.ColumnCount = 1;
+            dgvScriptsParaAplicar.Rows.Clear();
+            dgvScriptsParaAplicar.Columns[0].HeaderText = "Scripts";
+            dgvScriptsParaAplicar.Columns[0].Name = "Scripts";
+            dgvScriptsParaAplicar.AllowUserToAddRows = false;
+            dgvScriptsParaAplicar.ReadOnly = true;
+
+            foreach (Scripts item in config.arquivosScriptsParaAplicar.scripts)
+                dgvScriptsParaAplicar.Rows.Add(item.nomeArquivo);
+
+            dgvScriptsParaAplicar.Refresh();
+        }
+
+        private void carregaDataGridViewScriptCompleto()
+        {
+            dgvScriptCompleto.ColumnCount = 1;
+            dgvScriptCompleto.Rows.Clear();
+            dgvScriptCompleto.Columns[0].HeaderText = "Scripts";
+            dgvScriptCompleto.Columns[0].Name = "Scripts";
+            dgvScriptCompleto.AllowUserToAddRows = false;
+            dgvScriptCompleto.ReadOnly = true;
+
+            foreach (Scripts item in config.arquivoScriptCompleto.scripts)
+                dgvScriptCompleto.Rows.Add(item.nomeArquivo);
+
+            dgvScriptCompleto.Refresh();
+        }
+
         private void verificaBotaoSalvar()
         {
             btnSalvar.Enabled = acao;
@@ -62,6 +92,8 @@ namespace Configuracoes
             txtSenhaBase.Text = config.senhaBase;
 
             carregaDataGridViewScriptsJaAplicados();
+            carregaDataGridViewScriptsParaAplicar();
+            carregaDataGridViewScriptCompleto();
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

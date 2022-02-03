@@ -12,10 +12,11 @@ namespace pipeline_config
         public String nomeArquivo { get; set; }
         public String caminhoArquivo { get; set; }
 
-        public class ScriptsAplicados
+        public class Lista
         {
             public List<Scripts> scripts { get; set; }
         }
+
 
         public class Info
         {
@@ -36,9 +37,9 @@ namespace pipeline_config
          * Esta versão inicial, seria a versão já encontrada no banco de dados, resultado na não execução das versões anteriores
          * 
          */
-        public static Scripts.ScriptsAplicados listaScriptsAplicados(Configuracao _configuracao, Dictionary<String,int> _versoesAplicadas)
+        public static Scripts.Lista listaScriptsAplicados(Configuracao _configuracao, Dictionary<String,int> _versoesAplicadas)
         {
-            Scripts.ScriptsAplicados aplicados = new ScriptsAplicados();
+            Scripts.Lista aplicados = new Scripts.Lista();
             aplicados.scripts = new List<Scripts>();
             foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.scriptAplicado))
             {
@@ -50,6 +51,32 @@ namespace pipeline_config
                     aplicados.scripts.Add(script);
             }
             return aplicados;
+        }
+
+        public static Scripts.Lista listaScriptsParaAplicar(Configuracao _configuracao)
+        {
+            Scripts.Lista paraAplicar = new Scripts.Lista();
+            paraAplicar.scripts = new List<Scripts>();
+            foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.aplicaScript))
+            {
+                Scripts script = new Scripts { nomeArquivo = arquivos.Name, caminhoArquivo = arquivos.FullName };
+                Scripts.Info info = new Scripts.Info(script);
+                paraAplicar.scripts.Add(script);
+            }
+            return paraAplicar;
+        }
+
+        public static Scripts.Lista listaScriptCompleto(Configuracao _configuracao)
+        {
+            Scripts.Lista completo = new Scripts.Lista();
+            completo.scripts = new List<Scripts>();
+            foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.scriptCompleto))
+            {
+                Scripts script = new Scripts { nomeArquivo = arquivos.Name, caminhoArquivo = arquivos.FullName };
+                Scripts.Info info = new Scripts.Info(script);
+                completo.scripts.Add(script);
+            }
+            return completo;
         }
     }
 }

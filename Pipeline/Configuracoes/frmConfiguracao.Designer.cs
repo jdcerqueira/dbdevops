@@ -53,19 +53,19 @@ namespace Configuracoes
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControleScripts = new System.Windows.Forms.TabControl();
             this.tabScriptsAplicar = new System.Windows.Forms.TabPage();
+            this.dgvScriptsParaAplicar = new System.Windows.Forms.DataGridView();
             this.tabScriptCompleto = new System.Windows.Forms.TabPage();
-            this.tabScriptsJaAplicados = new System.Windows.Forms.TabPage();
             this.dgvScriptCompleto = new System.Windows.Forms.DataGridView();
-            this.dgvScriptsAplicar = new System.Windows.Forms.DataGridView();
+            this.tabScriptsJaAplicados = new System.Windows.Forms.TabPage();
             this.dgvScriptsJaAplicados = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControleScripts.SuspendLayout();
             this.tabScriptsAplicar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsParaAplicar)).BeginInit();
             this.tabScriptCompleto.SuspendLayout();
-            this.tabScriptsJaAplicados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsAplicar)).BeginInit();
+            this.tabScriptsJaAplicados.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).BeginInit();
             this.SuspendLayout();
             // 
@@ -282,8 +282,8 @@ namespace Configuracoes
             // 
             this.tabControleScripts.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControleScripts.Controls.Add(this.tabScriptsAplicar);
-            this.tabControleScripts.Controls.Add(this.tabScriptCompleto);
             this.tabControleScripts.Controls.Add(this.tabScriptsJaAplicados);
+            this.tabControleScripts.Controls.Add(this.tabScriptCompleto);
             this.tabControleScripts.Location = new System.Drawing.Point(6, 12);
             this.tabControleScripts.Multiline = true;
             this.tabControleScripts.Name = "tabControleScripts";
@@ -293,7 +293,7 @@ namespace Configuracoes
             // 
             // tabScriptsAplicar
             // 
-            this.tabScriptsAplicar.Controls.Add(this.dgvScriptsAplicar);
+            this.tabScriptsAplicar.Controls.Add(this.dgvScriptsParaAplicar);
             this.tabScriptsAplicar.Location = new System.Drawing.Point(4, 4);
             this.tabScriptsAplicar.Name = "tabScriptsAplicar";
             this.tabScriptsAplicar.Padding = new System.Windows.Forms.Padding(3);
@@ -301,6 +301,17 @@ namespace Configuracoes
             this.tabScriptsAplicar.TabIndex = 0;
             this.tabScriptsAplicar.Text = "Scripts para Aplicar";
             this.tabScriptsAplicar.UseVisualStyleBackColor = true;
+            // 
+            // dgvScriptsParaAplicar
+            // 
+            this.dgvScriptsParaAplicar.AllowUserToAddRows = false;
+            this.dgvScriptsParaAplicar.AllowUserToDeleteRows = false;
+            this.dgvScriptsParaAplicar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvScriptsParaAplicar.Location = new System.Drawing.Point(6, 6);
+            this.dgvScriptsParaAplicar.Name = "dgvScriptsParaAplicar";
+            this.dgvScriptsParaAplicar.ReadOnly = true;
+            this.dgvScriptsParaAplicar.Size = new System.Drawing.Size(342, 195);
+            this.dgvScriptsParaAplicar.TabIndex = 1;
             // 
             // tabScriptCompleto
             // 
@@ -313,17 +324,6 @@ namespace Configuracoes
             this.tabScriptCompleto.Text = "Script Completo";
             this.tabScriptCompleto.UseVisualStyleBackColor = true;
             // 
-            // tabScriptsJaAplicados
-            // 
-            this.tabScriptsJaAplicados.Controls.Add(this.dgvScriptsJaAplicados);
-            this.tabScriptsJaAplicados.Location = new System.Drawing.Point(4, 4);
-            this.tabScriptsJaAplicados.Name = "tabScriptsJaAplicados";
-            this.tabScriptsJaAplicados.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScriptsJaAplicados.Size = new System.Drawing.Size(354, 207);
-            this.tabScriptsJaAplicados.TabIndex = 2;
-            this.tabScriptsJaAplicados.Text = "Scripts já Aplicados";
-            this.tabScriptsJaAplicados.UseVisualStyleBackColor = true;
-            // 
             // dgvScriptCompleto
             // 
             this.dgvScriptCompleto.AllowUserToAddRows = false;
@@ -335,16 +335,16 @@ namespace Configuracoes
             this.dgvScriptCompleto.Size = new System.Drawing.Size(342, 195);
             this.dgvScriptCompleto.TabIndex = 0;
             // 
-            // dgvScriptsAplicar
+            // tabScriptsJaAplicados
             // 
-            this.dgvScriptsAplicar.AllowUserToAddRows = false;
-            this.dgvScriptsAplicar.AllowUserToDeleteRows = false;
-            this.dgvScriptsAplicar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvScriptsAplicar.Location = new System.Drawing.Point(6, 6);
-            this.dgvScriptsAplicar.Name = "dgvScriptsAplicar";
-            this.dgvScriptsAplicar.ReadOnly = true;
-            this.dgvScriptsAplicar.Size = new System.Drawing.Size(342, 195);
-            this.dgvScriptsAplicar.TabIndex = 1;
+            this.tabScriptsJaAplicados.Controls.Add(this.dgvScriptsJaAplicados);
+            this.tabScriptsJaAplicados.Location = new System.Drawing.Point(4, 4);
+            this.tabScriptsJaAplicados.Name = "tabScriptsJaAplicados";
+            this.tabScriptsJaAplicados.Padding = new System.Windows.Forms.Padding(3);
+            this.tabScriptsJaAplicados.Size = new System.Drawing.Size(354, 207);
+            this.tabScriptsJaAplicados.TabIndex = 2;
+            this.tabScriptsJaAplicados.Text = "Scripts já Aplicados";
+            this.tabScriptsJaAplicados.UseVisualStyleBackColor = true;
             // 
             // dgvScriptsJaAplicados
             // 
@@ -376,10 +376,10 @@ namespace Configuracoes
             this.groupBox2.ResumeLayout(false);
             this.tabControleScripts.ResumeLayout(false);
             this.tabScriptsAplicar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsParaAplicar)).EndInit();
             this.tabScriptCompleto.ResumeLayout(false);
-            this.tabScriptsJaAplicados.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsAplicar)).EndInit();
+            this.tabScriptsJaAplicados.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).EndInit();
             this.ResumeLayout(false);
 
@@ -413,7 +413,7 @@ namespace Configuracoes
         private System.Windows.Forms.TabPage tabScriptsAplicar;
         private System.Windows.Forms.TabPage tabScriptCompleto;
         private System.Windows.Forms.TabPage tabScriptsJaAplicados;
-        private System.Windows.Forms.DataGridView dgvScriptsAplicar;
+        private System.Windows.Forms.DataGridView dgvScriptsParaAplicar;
         private System.Windows.Forms.DataGridView dgvScriptCompleto;
         private System.Windows.Forms.DataGridView dgvScriptsJaAplicados;
     }

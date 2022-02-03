@@ -1,4 +1,4 @@
-branch=
+branch=release/SalaLimpa
 connection=DESKTOP-SCVFDSG\SQL2019A
 aplicaScript=ScriptsParaAplicar
 scriptCompleto=ScriptCompleto

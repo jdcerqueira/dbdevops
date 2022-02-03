@@ -19,11 +19,17 @@ namespace pipeline_config
         public String usuarioBase;
         public String senhaBase;
         public Dictionary<String, int> versaoBaseAplicada = new Dictionary<String, int>();
-        public Scripts.ScriptsAplicados arquivosScriptsAplicados = new Scripts.ScriptsAplicados();
+        public Dictionary<String, int> versaoParaAplicar = new Dictionary<String, int>();
+        public Scripts.Lista arquivosScriptsAplicados = new Scripts.Lista();
+        public Scripts.Lista arquivosScriptsParaAplicar = new Scripts.Lista();
+        public Scripts.Lista arquivoScriptCompleto = new Scripts.Lista();
+        
 
         public Configuracao()
         {
             arquivosScriptsAplicados.scripts = new List<Scripts>();
+            arquivosScriptsParaAplicar.scripts = new List<Scripts>();
+            arquivoScriptCompleto.scripts = new List<Scripts>();
 
             //carrega arquivo configuração
             foreach (String linhaArquivo in Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao))
@@ -67,7 +73,35 @@ namespace pipeline_config
                     }
                 }
             }
-            
+
+            arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.aplicaScript);
+            if (arquivosNaPasta != null)
+                foreach (FileInfo arquivo in arquivosNaPasta)
+                {
+                    int versao = 0;
+                    if (arquivo != null)
+                    {
+                        Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+                        arquivosScriptsParaAplicar.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+
+                        if (!versaoParaAplicar.ContainsKey(info.baseDados))
+                            versaoParaAplicar.Add(info.baseDados, info.versao);
+                        else
+                        {
+                            versaoParaAplicar.TryGetValue(info.baseDados, out versao);
+                            if (versao < info.versao)
+                                versaoParaAplicar[info.baseDados] = info.versao;
+                        }
+                    }
+                }
+                    
+
+            arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptCompleto);
+            if (arquivosNaPasta != null)
+                foreach (FileInfo arquivo in arquivosNaPasta)
+                    if (arquivo != null)
+                        arquivoScriptCompleto.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
+
         }
 
         override

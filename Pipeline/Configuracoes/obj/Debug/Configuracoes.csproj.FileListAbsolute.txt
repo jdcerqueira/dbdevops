@@ -10,3 +10,4 @@ E:\GitHub\dbdevops\Pipeline\Configuracoes\obj\Debug\Configuracoes.exe
 E:\GitHub\dbdevops\Pipeline\Configuracoes\obj\Debug\Configuracoes.pdb
 E:\GitHub\dbdevops\Pipeline\Configuracoes\bin\Debug\pipeline_config.dll
 E:\GitHub\dbdevops\Pipeline\Configuracoes\bin\Debug\pipeline_config.pdb
+E:\GitHub\dbdevops\Pipeline\Configuracoes\obj\Debug\Configuracoes.csproj.CopyComplete
