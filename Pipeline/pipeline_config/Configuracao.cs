@@ -19,11 +19,10 @@ namespace pipeline_config
         public String usuarioBase;
         public String senhaBase;
         public Dictionary<String, int> versaoBaseAplicada = new Dictionary<String, int>();
-        public Dictionary<String, int> versaoParaAplicar = new Dictionary<String, int>();
         public Scripts.Lista arquivosScriptsAplicados = new Scripts.Lista();
         public Scripts.Lista arquivosScriptsParaAplicar = new Scripts.Lista();
         public Scripts.Lista arquivoScriptCompleto = new Scripts.Lista();
-        
+        public List<Scripts.Info> versaoDosScriptsAplicados = new List<Scripts.Info>();
 
         public Configuracao()
         {
@@ -47,20 +46,18 @@ namespace pipeline_config
                 this.senhaBase = infoLinhaArquivo[0] == "senhaBase" ? Util.Criptografia.Decrypt(infoLinhaArquivo[1].Replace("(***Igual***)","="),Util.Constantes.keyCripto,true) : this.senhaBase;
             }
 
-            //preenche dicionário de bases e versionamentos na encontrados na pasta de aplicados
+            // retorna os arquivos na pasta de scripts já aplicados
             FileInfo[] arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptAplicado);
-
             if(arquivosNaPasta != null)
-            {
                 foreach (FileInfo arquivo in arquivosNaPasta)
                 {
                     int versao = 0;
 
-                    if(arquivo != null)
+                    if (arquivo != null)
                     {
                         Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
                         arquivosScriptsAplicados.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-
+                        versaoDosScriptsAplicados.Add(info);
 
                         if (!versaoBaseAplicada.ContainsKey(info.baseDados))
                             versaoBaseAplicada.Add(info.baseDados, info.versao);
@@ -72,28 +69,18 @@ namespace pipeline_config
                         }
                     }
                 }
-            }
 
             arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.aplicaScript);
             if (arquivosNaPasta != null)
                 foreach (FileInfo arquivo in arquivosNaPasta)
-                {
-                    int versao = 0;
                     if (arquivo != null)
                     {
                         Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-                        arquivosScriptsParaAplicar.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-
-                        if (!versaoParaAplicar.ContainsKey(info.baseDados))
-                            versaoParaAplicar.Add(info.baseDados, info.versao);
-                        else
-                        {
-                            versaoParaAplicar.TryGetValue(info.baseDados, out versao);
-                            if (versao < info.versao)
-                                versaoParaAplicar[info.baseDados] = info.versao;
-                        }
+                        
+                        if(!versaoDosScriptsAplicados.Exists(script => script.baseDados == info.baseDados && script.versao == info.versao))
+                            arquivosScriptsParaAplicar.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
                     }
-                }
+
                     
 
             arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptCompleto);

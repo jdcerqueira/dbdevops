@@ -7,4 +7,3 @@ E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.exe
 E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.pdb
 E:\GitHub\dbdevops\Pipeline\Pipeline\bin\Debug\pipeline_config.dll
 E:\GitHub\dbdevops\Pipeline\Pipeline\bin\Debug\pipeline_config.pdb
-E:\GitHub\dbdevops\Pipeline\Pipeline\obj\Debug\Pipeline.csproj.CopyComplete

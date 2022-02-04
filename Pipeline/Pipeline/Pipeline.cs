@@ -40,17 +40,14 @@ namespace Pipeline
             // Verifica se os scripts para aplicar estão na versão correta
             if (verificaVersaoScriptParaAplicar(_configuracao))
             {
-
+                foreach (var item in _configuracao.arquivosScriptsParaAplicar.scripts)
+                    Console.WriteLine($"Script para aplicar: {item.nomeArquivo} - {item.caminhoArquivo}");
             }
-
-
-
         }
 
         private Boolean verificaVersaoScriptParaAplicar(Configuracao _configuracao)
         {
-
-            return false;
+            return _configuracao.arquivosScriptsParaAplicar.scripts.Count > 0;
         }
 
         private Boolean existeBaseControladora(Configuracao _configuracao)
