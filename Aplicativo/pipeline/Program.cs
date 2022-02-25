@@ -6,7 +6,7 @@ namespace pipeline
     {
         public static void Main(string[] args)
         {
-            Configuracao configuracao = new Configuracao();
+            new Pipeline(new Configuracao());
         }
     }
 }

@@ -86,3 +86,7 @@ E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.CoreC
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.exe
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.pdb
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.AssemblyReference.cache
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\Newtonsoft.Json.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\Newtonsoft.Json.xml
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.CopyComplete
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.frmConfiguracao.resources

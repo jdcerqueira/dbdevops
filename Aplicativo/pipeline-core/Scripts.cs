@@ -46,8 +46,11 @@ namespace pipeline_core
                 Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
                 executaScript.executaQuery($"exec dbo.pRegisterNewVersion {info.versao},'{info.baseDados}','{Configuracao.loginControladora}',null,'{script.caminhoArquivo}','{Util.Criptografia.Encrypt(File.ReadAllText(script.caminhoArquivo), Util.Constantes.keyCripto, true)}'", true);
 
-                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "complementaArquivo", $"Irá complementar o arquivo de script completo" });
                 Util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{Util.Constantes.arquivoScriptCompleto}");
+
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "moveArquivo", $"{script.nomeArquivo} -> {configuracao.scriptAplicado}" });
+                Util.Arquivos.moveArquivo(script.caminhoArquivo, $"{configuracao.scriptAplicado}\\{script.nomeArquivo}");
             }
             catch (Exception ex)
             {

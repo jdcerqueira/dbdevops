@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace pipeline_core
 {
@@ -26,28 +27,28 @@ namespace pipeline_core
         public const String usuarioControladora = "usr_dbcontrol";
         public const String senhaControladora = "lgn_dbcontrol_99";
 
-        const String replaceIgual = "%3euue3%";
-
         public Configuracao()
         {
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "", "Inicia configuração." });
 
             //carrega arquivo configuração
-            foreach (String linhaArquivo in Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao).Split('\n'))
+            String arquivoConfig = Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao);
+
+            if(arquivoConfig != "")
             {
-                String[] infoLinhaArquivo = linhaArquivo.Split('=');
+                var jsonConfig = JObject.Parse(arquivoConfig);
 
-                this.branch = infoLinhaArquivo[0] == "branch" ? infoLinhaArquivo[1] : this.branch;
-                this.connection = infoLinhaArquivo[0] == "connection" ? infoLinhaArquivo[1] : this.connection;
-                this.aplicaScript = infoLinhaArquivo[0] == "aplicaScript" ? infoLinhaArquivo[1] : this.aplicaScript;
-                this.scriptCompleto = infoLinhaArquivo[0] == "scriptCompleto" ? infoLinhaArquivo[1] : this.scriptCompleto;
-                this.scriptAplicado = infoLinhaArquivo[0] == "scriptAplicado" ? infoLinhaArquivo[1] : this.scriptAplicado;
-                this.log = infoLinhaArquivo[0] == "log" ? infoLinhaArquivo[1] : this.log;
-                this.pastaBaseVersionadora = infoLinhaArquivo[0] == "pastaBaseVersionadora" ? @infoLinhaArquivo[1].ToString() : this.pastaBaseVersionadora;
-                this.usuarioBase = infoLinhaArquivo[0] == "usuarioBase" ? infoLinhaArquivo[1] : this.usuarioBase;
-                this.senhaBase = infoLinhaArquivo[0] == "senhaBase" ? Util.Criptografia.Decrypt(infoLinhaArquivo[1].Replace(replaceIgual, "="), Util.Constantes.keyCripto, true) : this.senhaBase;
+                this.branch = jsonConfig["branch"].ToString();
+                this.connection = jsonConfig["connection"].ToString().Replace("/","\\");
+                this.aplicaScript = jsonConfig["aplicaScript"].ToString().Replace("/", "\\");
+                this.scriptCompleto = jsonConfig["scriptCompleto"].ToString().Replace("/", "\\");
+                this.scriptAplicado = jsonConfig["scriptAplicado"].ToString().Replace("/", "\\");
+                this.log = jsonConfig["log"].ToString().Replace("/", "\\");
+                this.pastaBaseVersionadora = jsonConfig["pastaBaseVersionadora"].ToString().Replace("/", "\\");
+                this.usuarioBase = jsonConfig["usuarioBase"].ToString();
+                this.senhaBase = Util.Criptografia.Decrypt(jsonConfig["senhaBase"].ToString(), Util.Constantes.keyCripto, true);
             }
-
+            
             // Valida as pastas informadas
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaDiretorio", $"{this.aplicaScript}" });
             Util.Arquivos.validaDiretorio(this.aplicaScript);
@@ -149,18 +150,21 @@ namespace pipeline_core
             String _pastaBaseVersionadora)
         {
             StringBuilder configuracao = new StringBuilder();
-            configuracao.AppendLine($"branch={_branch}");
-            configuracao.AppendLine($"connection={_connection}");
-            configuracao.AppendLine($"aplicaScript={_aplicaScript}");
-            configuracao.AppendLine($"scriptCompleto={_scriptCompleto}");
-            configuracao.AppendLine($"scriptAplicado={_scriptAplicado}");
-            configuracao.AppendLine($"log={_log}");
-            configuracao.AppendLine($"baseControladora={_baseControladora}");
-            configuracao.AppendLine($"usuarioBase={_usuarioBase}");
-            configuracao.AppendLine($"senhaBase={Util.Criptografia.Encrypt(_senhaBase, Util.Constantes.keyCripto, true).Replace("=", replaceIgual)}");
-            configuracao.AppendLine($"pastaBaseVersionadora={_pastaBaseVersionadora}");
 
-            Util.Arquivos.gravaArquivo(Util.Constantes.arquivoConfiguracao, configuracao.ToString());
+            configuracao.AppendLine("{");
+            configuracao.AppendLine($"\"branch\":\"{_branch}\"");
+            configuracao.AppendLine($",\"connection\":\"{_connection}\"");
+            configuracao.AppendLine($",\"aplicaScript\":\"{_aplicaScript}\"");
+            configuracao.AppendLine($",\"scriptCompleto\":\"{_scriptCompleto}\"");
+            configuracao.AppendLine($",\"scriptAplicado\":\"{_scriptAplicado}\"");
+            configuracao.AppendLine($",\"log\":\"{_log}\"");
+            configuracao.AppendLine($",\"baseControladora\":\"{_baseControladora}\"");
+            configuracao.AppendLine($",\"usuarioBase\":\"{_usuarioBase}\"");
+            configuracao.AppendLine($",\"senhaBase\":\"{Util.Criptografia.Encrypt(_senhaBase, Util.Constantes.keyCripto, true)}\"");
+            configuracao.AppendLine($",\"pastaBaseVersionadora\":\"{_pastaBaseVersionadora}\"");
+            configuracao.AppendLine("}");
+
+            Util.Arquivos.gravaArquivo(Util.Constantes.arquivoConfiguracao, configuracao.ToString().Replace("\\","/"));
         }
     }
 }

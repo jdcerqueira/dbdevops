@@ -10,8 +10,8 @@ namespace pipeline_core
     {
         public class Constantes
         {
-            public const String arquivoConfiguracao = "config";
-            public const String keyCripto = "abc";
+            public const String arquivoConfiguracao = "config.json";
+            public const String keyCripto = "%jth$@lwmk";
             public const String arquivoScriptBaseVersionadora = "01_DatabaseControlVersion_Create.sql";
             public const String arquivoScriptCompleto = "script_completo.sql";
 
@@ -189,9 +189,14 @@ namespace pipeline_core
             {
                 try
                 {
+                    Log.registraLog(new String[] { "Util.Arquivos", System.Reflection.MethodBase.GetCurrentMethod().Name, "validaArquivo", $"{arquivoOrigem} -> {arquivoDestino}" });
+                    validaArquivo(arquivoDestino);
+
                     Log.registraLog(new String[] { "Util.Arquivos", System.Reflection.MethodBase.GetCurrentMethod().Name, "carregaConteudoArquivo", $"{arquivoOrigem} -> {arquivoDestino}" });
-                    String contentArquivoOrigem = carregaConteudoArquivo(arquivoOrigem);
-                    File.AppendAllText(arquivoOrigem, contentArquivoOrigem);
+                    String contentArquivoOrigem = $"-- {DateTime.Now.ToString()} **** Script aplicado - {arquivoOrigem} ****\n" + carregaConteudoArquivo(arquivoOrigem) + "\n\n";
+
+                    Log.registraLog(new String[] { "Util.Arquivos", System.Reflection.MethodBase.GetCurrentMethod().Name, "File.AppendAllText", $"{arquivoOrigem} -> {arquivoDestino}" });
+                    File.AppendAllText(arquivoDestino, contentArquivoOrigem);
                 }
                 catch (Exception ex)
                 {

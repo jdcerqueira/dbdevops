@@ -30,6 +30,8 @@ namespace Configuracoes
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPastaBaseVersionadora = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtSenhaBase = new System.Windows.Forms.TextBox();
             this.txtUsuarioBase = new System.Windows.Forms.TextBox();
             this.txtBaseVersionadora = new System.Windows.Forms.TextBox();
@@ -58,8 +60,6 @@ namespace Configuracoes
             this.dgvScriptsJaAplicados = new System.Windows.Forms.DataGridView();
             this.tabScriptCompleto = new System.Windows.Forms.TabPage();
             this.dgvScriptCompleto = new System.Windows.Forms.DataGridView();
-            this.txtPastaBaseVersionadora = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControleScripts.SuspendLayout();
@@ -99,6 +99,23 @@ namespace Configuracoes
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // txtPastaBaseVersionadora
+            // 
+            this.txtPastaBaseVersionadora.Location = new System.Drawing.Point(109, 168);
+            this.txtPastaBaseVersionadora.Name = "txtPastaBaseVersionadora";
+            this.txtPastaBaseVersionadora.Size = new System.Drawing.Size(233, 20);
+            this.txtPastaBaseVersionadora.TabIndex = 6;
+            this.txtPastaBaseVersionadora.TextChanged += new System.EventHandler(this.txtPastaBaseVersionadora_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 171);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(76, 13);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Pasta da Base";
+            // 
             // txtSenhaBase
             // 
             this.txtSenhaBase.Location = new System.Drawing.Point(109, 213);
@@ -123,6 +140,7 @@ namespace Configuracoes
             this.txtBaseVersionadora.ReadOnly = true;
             this.txtBaseVersionadora.Size = new System.Drawing.Size(233, 20);
             this.txtBaseVersionadora.TabIndex = 6;
+            this.txtBaseVersionadora.TabStop = false;
             this.txtBaseVersionadora.TextChanged += new System.EventHandler(this.txtBaseVersionadora_TextChanged);
             // 
             // txtLog
@@ -361,23 +379,6 @@ namespace Configuracoes
             this.dgvScriptCompleto.ReadOnly = true;
             this.dgvScriptCompleto.Size = new System.Drawing.Size(342, 195);
             this.dgvScriptCompleto.TabIndex = 0;
-            // 
-            // txtPastaBaseVersionadora
-            // 
-            this.txtPastaBaseVersionadora.Location = new System.Drawing.Point(109, 168);
-            this.txtPastaBaseVersionadora.Name = "txtPastaBaseVersionadora";
-            this.txtPastaBaseVersionadora.Size = new System.Drawing.Size(233, 20);
-            this.txtPastaBaseVersionadora.TabIndex = 9;
-            this.txtPastaBaseVersionadora.TextChanged += new System.EventHandler(this.txtPastaBaseVersionadora_TextChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 171);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(76, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Pasta da Base";
             // 
             // frmConfiguracao
             // 
