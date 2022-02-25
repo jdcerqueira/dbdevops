@@ -1,104 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using Microsoft.Data.SqlClient;
+using Microsoft.SqlServer.Management.Common;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace pipeline_config
 {
     public class DAO
     {
-        public static SqlConnection connection(Configuracao configuracao)
-        {
-            try
-            {
-                String strConnection = $@"Server = {configuracao.connection}; Database = master; User Id={configuracao.usuarioBase}; Password={configuracao.senhaBase}";
-                return new SqlConnection(strConnection);
-            }
-            catch (SqlException sq)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.connection(?,?)):{sq.Message}");
-            }
-            catch (Exception ex)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.connection(?,?)):{ex.Message}");
-            }
+        public String strConnectionBaseVersionadora = $@"";
+        public String strConnectionBaseMaster = $@"";
 
-            return null;
+        public DAO(Configuracao _configuracao)
+        {
+            strConnectionBaseVersionadora = $@"Data Source = {_configuracao.connection}; Initial Catalog = {Configuracao.baseControladora}; User Id = {Configuracao.loginControladora}; Password = {Configuracao.senhaControladora};Encrypt=True;TrustServerCertificate=True;";
+            strConnectionBaseMaster = $@"Data Source = {_configuracao.connection}; Initial Catalog = master; User Id={_configuracao.usuarioBase}; Password = {_configuracao.senhaBase}; Encrypt=True; TrustServerCertificate=True;";
         }
 
-        public static SqlConnection connection(Configuracao configuracao, String baseDados)
+        public SqlConnection GetConnection(String ConnectionString)
         {
-            try
-            {
-                String strConnection = $"Server = {configuracao.connection}; Database = {baseDados}; Trusted_Connection = True;";
-                return new SqlConnection(strConnection);
-            }
-            catch (SqlException sq)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.connection(?)):{sq.Message}");
-            }
-            catch (Exception ex)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.connection(?)):{ex.Message}");
-            }
-
-            return null;
+            return new SqlConnection(ConnectionString);
         }
 
-        public static void executaComando(SqlConnection connection, String statement)
+        public void executaArquivoScript(String caminhoScript, Boolean isVersionadora)
         {
+            String script = File.ReadAllText(caminhoScript);
             try
             {
-                using (SqlCommand sqlCommand = new SqlCommand(statement, connection))
+                using (SqlConnection sqlconnection = this.GetConnection(isVersionadora ? this.strConnectionBaseVersionadora : this.strConnectionBaseMaster))
                 {
-                    sqlCommand.Connection.Open();
-                    sqlCommand.ExecuteNonQuery();
+                    sqlconnection.Open();
+                    Server server = new Server(new ServerConnection(sqlconnection));
+                    server.ConnectionContext.ExecuteNonQuery(script);
                 }
             }
-            catch (SqlException sq)
+            catch (System.Data.SqlClient.SqlException sqlex)
             {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.executaComando(?,?)):{sq.Message}");
+                Console.WriteLine("ERR (SQL Exception):" + sqlex.Message);
             }
             catch (Exception ex)
             {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.executaComando(?,?)):{ex.Message}");
+                Console.WriteLine("ERR: (Exception)" + ex.Message);
             }
         }
 
-        public static SqlDataReader executaComandoResultSet(SqlConnection connection, String statement)
+        public SqlDataReader executaResultSet(String comando, Boolean isVersionadora)
         {
-            try
-            {
-                using (SqlCommand sqlCommand = new SqlCommand(statement, connection))
-                {
-                    sqlCommand.Connection.Open();
-                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                    if (!sqlDataReader.HasRows)
-                        return null;
+            SqlCommand command = new SqlCommand(comando, this.GetConnection(isVersionadora ? this.strConnectionBaseVersionadora : this.strConnectionBaseMaster));
+            command.Connection.Open();
+            return command.ExecuteReader();
+        }
 
-                    return sqlDataReader;
-                }
-            }
-            catch (SqlException sq)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.executaComandoResultSet(?,?)):{sq.Message}");
-            }
-            catch (Exception ex)
-            {
-                // aqui precisa escrever no arquivo de log
-                Console.WriteLine($"ERR(DAO.executaComandoResultSet(?,?)):{ex.Message}");
-            }
-
-            return null;
+        public void executaQuery(String comando, Boolean isVersionadora)
+        {
+            SqlCommand command = new SqlCommand(comando, this.GetConnection(isVersionadora ? this.strConnectionBaseVersionadora : this.strConnectionBaseMaster));
+            command.Connection.Open();
+            command.ExecuteNonQuery();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Pipeline
         {
             //Carregar arquivo de configuracao
             //Inicia o pipeline
-            Console.WriteLine("Atualizado");
+            //Console.WriteLine("Atualizado");
             new Pipeline(new Configuracao());
         }
     }

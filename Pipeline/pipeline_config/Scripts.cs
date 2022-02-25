@@ -12,12 +12,6 @@ namespace pipeline_config
         public String nomeArquivo { get; set; }
         public String caminhoArquivo { get; set; }
 
-        public class Lista
-        {
-            public List<Scripts> scripts { get; set; }
-        }
-
-
         public class Info
         {
             public String baseDados;
@@ -30,53 +24,69 @@ namespace pipeline_config
             }
         }
 
-        /*
-         * 
-         * Lista os scripts que estão disponíveis na pasta aplicados.
-         * Para listagem dos itens, será considerada uma versão de aplicados inicial.
-         * Esta versão inicial, seria a versão já encontrada no banco de dados, resultado na não execução das versões anteriores
-         * 
-         */
-        public static Scripts.Lista listaScriptsAplicados(Configuracao _configuracao, Dictionary<String,int> _versoesAplicadas)
+        public static void aplicaScript(Scripts script, Configuracao configuracao)
         {
-            Scripts.Lista aplicados = new Scripts.Lista();
-            aplicados.scripts = new List<Scripts>();
-            foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.scriptAplicado))
-            {
-                Scripts script = new Scripts { nomeArquivo = arquivos.Name, caminhoArquivo = arquivos.FullName };
-                Scripts.Info info = new Scripts.Info(script);
-                int _versaoInicial = 0;
-                _versoesAplicadas.TryGetValue(info.baseDados, out _versaoInicial);
-                if(info.versao > _versaoInicial)
-                    aplicados.scripts.Add(script);
-            }
-            return aplicados;
+            Scripts.Info info = new Scripts.Info(script);
+            DAO executaScript = new DAO(configuracao);
+
+            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Aplicando o script {script.caminhoArquivo}" });
+            executaScript.executaArquivoScript(script.caminhoArquivo, false);
+
+            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
+            executaScript.executaQuery($"exec dbo.pRegisterNewVersion {info.versao},'{info.baseDados}','{Configuracao.loginControladora}',null,'{script.caminhoArquivo}','{Util.Criptografia.Encrypt(File.ReadAllText(script.caminhoArquivo),Util.Constantes.keyCripto,true)}'", true);
         }
 
-        public static Scripts.Lista listaScriptsParaAplicar(Configuracao _configuracao)
+        public static void aplicaScript(Scripts script, Configuracao configuracao, Boolean isPendente)
         {
-            Scripts.Lista paraAplicar = new Scripts.Lista();
-            paraAplicar.scripts = new List<Scripts>();
-            foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.aplicaScript))
+            try
             {
-                Scripts script = new Scripts { nomeArquivo = arquivos.Name, caminhoArquivo = arquivos.FullName };
                 Scripts.Info info = new Scripts.Info(script);
-                paraAplicar.scripts.Add(script);
+                DAO executaScript = new DAO(configuracao);
+
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Aplicando o script {script.caminhoArquivo}" });
+                executaScript.executaArquivoScript(script.caminhoArquivo, false);
+
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
+                executaScript.executaQuery($"exec dbo.pRegisterNewVersion {info.versao},'{info.baseDados}','{Configuracao.loginControladora}',null,'{script.caminhoArquivo}','{Util.Criptografia.Encrypt(File.ReadAllText(script.caminhoArquivo), Util.Constantes.keyCripto, true)}'", true);
+
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
+                Util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{Util.Constantes.arquivoScriptCompleto}");
             }
-            return paraAplicar;
+            catch(Exception ex)
+            {
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "ERRO", ex.Message});
+            }
+            
         }
 
-        public static Scripts.Lista listaScriptCompleto(Configuracao _configuracao)
+
+        public static List<Scripts> GetScripts(String Caminho)
         {
-            Scripts.Lista completo = new Scripts.Lista();
-            completo.scripts = new List<Scripts>();
-            foreach (FileInfo arquivos in Util.Arquivos.listaArquivosPasta(_configuracao.scriptCompleto))
+            List<Scripts> scripts = new List<Scripts>();
+
+            foreach (FileInfo arquivo in Util.Arquivos.listaArquivosPasta(Caminho))
             {
-                Scripts script = new Scripts { nomeArquivo = arquivos.Name, caminhoArquivo = arquivos.FullName };
+                Scripts script = new Scripts() { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName };
                 Scripts.Info info = new Scripts.Info(script);
-                completo.scripts.Add(script);
+                scripts.Add(script);
             }
-            return completo;
+
+            return scripts;
+        }
+
+        public static List<Scripts> GetScripts(String Caminho, String BaseDados)
+        {
+            List<Scripts> scripts = new List<Scripts>();
+
+            foreach(FileInfo arquivo in Util.Arquivos.listaArquivosPasta(Caminho))
+            {
+                Scripts script = new Scripts() { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName };
+                Scripts.Info info = new Scripts.Info(script);
+                if (info.baseDados == BaseDados)
+                    scripts.Add(script);
+            }
+
+            return scripts;
         }
     }
 }

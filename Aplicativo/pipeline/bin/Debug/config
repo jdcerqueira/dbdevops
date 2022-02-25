@@ -1,0 +1,10 @@
+branch=
+connection=DESKTOP-SCVFDSG\SQL2019A
+aplicaScript=Devops\ToDo
+scriptCompleto=Devops\Full
+scriptAplicado=Devops\Done
+log=Devops\Log
+baseControladora=ControlDBDevops
+usuarioBase=aplicaDevops
+senhaBase=8bpLJVB+RNsOPuro0dAWcA%3euue3%%3euue3%
+pastaBaseVersionadora=Devops\Control

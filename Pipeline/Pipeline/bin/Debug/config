@@ -1,9 +1,10 @@
 branch=release/SalaLimpa
 connection=DESKTOP-SCVFDSG\SQL2019A
-aplicaScript=Devops\AplicaScript
-scriptCompleto=Devops\ScriptCompleto
-scriptAplicado=Devops\ScriptAplicado
+aplicaScript=Devops\ToDo
+scriptCompleto=Devops\Full
+scriptAplicado=Devops\Done
 log=Devops\Log
-baseControladora=Stellinha_baby
+baseControladora=ControlDBDevops
 usuarioBase=aplicaDevops
-senhaBase=8bpLJVB+RNsOPuro0dAWcA(***Igual***)(***Igual***)
+senhaBase=8bpLJVB+RNsOPuro0dAWcA%3euue3%%3euue3%
+pastaBaseVersionadora=Control

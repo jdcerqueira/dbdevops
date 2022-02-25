@@ -1,37 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace pipeline_config
 {
     public class Configuracao
     {
+        //Dados do arquivo config
         public String branch;
         public String connection;
         public String aplicaScript;
         public String scriptCompleto;
         public String scriptAplicado;
         public String log;
-        public String baseControladora;
+        public Scripts scriptBaseVersionadora;
+        public const String baseControladora = "ControlDBDevops";
         public String usuarioBase;
         public String senhaBase;
-        public Dictionary<String, int> versaoBaseAplicada = new Dictionary<String, int>();
-        public Scripts.Lista arquivosScriptsAplicados = new Scripts.Lista();
-        public Scripts.Lista arquivosScriptsParaAplicar = new Scripts.Lista();
-        public Scripts.Lista arquivoScriptCompleto = new Scripts.Lista();
-        public List<Scripts.Info> versaoDosScriptsAplicados = new List<Scripts.Info>();
+        public String pastaBaseVersionadora;
+        
+        //Dados da base versionadora
+        public const String loginControladora = "lgn_dbcontrol";
+        public const String usuarioControladora = "usr_dbcontrol";
+        public const String senhaControladora = "lgn_dbcontrol_99";
+        
+        const String replaceIgual = "%3euue3%";
 
         public Configuracao()
         {
-            arquivosScriptsAplicados.scripts = new List<Scripts>();
-            arquivosScriptsParaAplicar.scripts = new List<Scripts>();
-            arquivoScriptCompleto.scripts = new List<Scripts>();
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "", "Inicia configuração." });
 
             //carrega arquivo configuração
-            foreach (String linhaArquivo in Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao))
+            foreach (String linhaArquivo in Util.Arquivos.carregaConteudoArquivo(Util.Constantes.arquivoConfiguracao).Split('\n'))
             {
                 String[] infoLinhaArquivo = linhaArquivo.Split('=');
 
@@ -41,54 +43,88 @@ namespace pipeline_config
                 this.scriptCompleto = infoLinhaArquivo[0] == "scriptCompleto" ? infoLinhaArquivo[1] : this.scriptCompleto;
                 this.scriptAplicado = infoLinhaArquivo[0] == "scriptAplicado" ? infoLinhaArquivo[1] : this.scriptAplicado;
                 this.log = infoLinhaArquivo[0] == "log" ? infoLinhaArquivo[1] : this.log;
-                this.baseControladora = infoLinhaArquivo[0] == "baseControladora" ? infoLinhaArquivo[1] : this.baseControladora;
+                this.pastaBaseVersionadora = infoLinhaArquivo[0] == "pastaBaseVersionadora" ? @infoLinhaArquivo[1] : this.pastaBaseVersionadora;
                 this.usuarioBase = infoLinhaArquivo[0] == "usuarioBase" ? infoLinhaArquivo[1] : this.usuarioBase;
-                this.senhaBase = infoLinhaArquivo[0] == "senhaBase" ? Util.Criptografia.Decrypt(infoLinhaArquivo[1].Replace("(***Igual***)","="),Util.Constantes.keyCripto,true) : this.senhaBase;
+                this.senhaBase = infoLinhaArquivo[0] == "senhaBase" ? Util.Criptografia.Decrypt(infoLinhaArquivo[1].Replace(replaceIgual,"="),Util.Constantes.keyCripto,true) : this.senhaBase;
             }
 
-            // retorna os arquivos na pasta de scripts já aplicados
-            FileInfo[] arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptAplicado);
-            if(arquivosNaPasta != null)
-                foreach (FileInfo arquivo in arquivosNaPasta)
+            // Valida as pastas informadas
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaDiretorio", $"{this.aplicaScript}" });
+            Util.Arquivos.validaDiretorio(this.aplicaScript);
+
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaDiretorio", $"{this.scriptCompleto}" });
+            Util.Arquivos.validaDiretorio(this.scriptCompleto);
+
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaDiretorio", $"{this.scriptAplicado}" });
+            Util.Arquivos.validaDiretorio(this.scriptAplicado);
+
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaDiretorio", $"{this.pastaBaseVersionadora}" });
+            Util.Arquivos.validaDiretorio(this.pastaBaseVersionadora);
+
+            String txt = this.pastaBaseVersionadora; //"Devops\\Control";
+            Console.WriteLine($"Olhando: {txt}\\{Util.Constantes.arquivoScriptBaseVersionadora}");
+
+            // Cria os arquivos de scripts para a base versionadora
+            if(this.pastaBaseVersionadora != "")
+            {
+                Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "gravaArquivo", $@"{this.pastaBaseVersionadora}\{Util.Constantes.arquivoScriptBaseVersionadora}" });
+                Util.Arquivos.gravaArquivo(this.pastaBaseVersionadora + $@"\{Util.Constantes.arquivoScriptBaseVersionadora}", Util.Constantes.scriptBaseVersionadora());
+            }
+
+            //this.scriptBaseVersionadora = new Scripts() { caminhoArquivo = $@"{this.pastaBaseVersionadora}\{Util.Constantes.aquivoScriptBaseVersionadora}" };
+        }
+
+        // Inicializa a listagem de bases de dados aplicadas na base versionadora com a última versão de cada uma.
+        public Dictionary<String, int> GetDctBasesVersoes()
+        {
+
+            Dictionary<String, int> retorno = null;
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "executaResultSet", "EXEC dbo.pReturnMaxVersionByDb" });
+
+            try
+            {
+                SqlDataReader versoesBases = new DAO(this).executaResultSet("EXEC dbo.pReturnMaxVersionByDb", true);
+                retorno = new Dictionary<String, int>();
+                while (versoesBases.Read())
+                    retorno.Add(versoesBases["nmDatabase"].ToString(), Int32.Parse(versoesBases["MaxVersion"].ToString()));
+
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ERRO", ex.Message });
+            }
+
+            return null;
+        }
+
+        public Dictionary<String, int> GetDctScriptsExecutados()
+        {
+            Dictionary<String, int> retorno = null;
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "Util.Arquivos.listaArquivosPasta", "" });
+
+            try
+            {
+                retorno = new Dictionary<String, int>();
+                foreach (FileInfo arquivo in Util.Arquivos.listaArquivosPasta(this.scriptAplicado))
                 {
-                    int versao = 0;
+                    Scripts script = new Scripts() { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName };
+                    Scripts.Info info = new Scripts.Info(script);
 
-                    if (arquivo != null)
-                    {
-                        Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-                        arquivosScriptsAplicados.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-                        versaoDosScriptsAplicados.Add(info);
-
-                        if (!versaoBaseAplicada.ContainsKey(info.baseDados))
-                            versaoBaseAplicada.Add(info.baseDados, info.versao);
-                        else
-                        {
-                            versaoBaseAplicada.TryGetValue(info.baseDados, out versao);
-                            if (versao < info.versao)
-                                versaoBaseAplicada[info.baseDados] = info.versao;
-                        }
-                    }
+                    if (retorno.ContainsKey(info.baseDados))
+                        retorno[info.baseDados] = info.versao;
+                    else
+                        retorno.Add(info.baseDados, info.versao);
                 }
 
-            arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.aplicaScript);
-            if (arquivosNaPasta != null)
-                foreach (FileInfo arquivo in arquivosNaPasta)
-                    if (arquivo != null)
-                    {
-                        Scripts.Info info = new Scripts.Info(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-                        
-                        if(!versaoDosScriptsAplicados.Exists(script => script.baseDados == info.baseDados && script.versao == info.versao))
-                            arquivosScriptsParaAplicar.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-                    }
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "Util.Arquivos.listaArquivosPasta", ex.Message });
+            }
 
-                    
-
-            arquivosNaPasta = Util.Arquivos.listaArquivosPasta(this.scriptCompleto);
-            if (arquivosNaPasta != null)
-                foreach (FileInfo arquivo in arquivosNaPasta)
-                    if (arquivo != null)
-                        arquivoScriptCompleto.scripts.Add(new Scripts { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName });
-
+            return retorno;
         }
 
         override
@@ -100,7 +136,8 @@ namespace pipeline_config
                 $"ScriptCompleto: {this.scriptCompleto}\n" +
                 $"ScriptAplicado: {this.scriptAplicado}\n" +
                 $"Log: {this.log}\n" +
-                $"BaseControladora: {this.baseControladora}";
+                $"BaseControladora: {Configuracao.baseControladora}\n" +
+                $"Pasta base versionadora: {this.pastaBaseVersionadora}";
         }
 
         public static void salvarConfiguracao
@@ -112,7 +149,8 @@ namespace pipeline_config
             String _log,
             String _baseControladora,
             String _usuarioBase,
-            String _senhaBase)
+            String _senhaBase,
+            String _pastaBaseVersionadora)
         {
             StringBuilder configuracao = new StringBuilder();
             configuracao.AppendLine($"branch={_branch}");
@@ -123,7 +161,8 @@ namespace pipeline_config
             configuracao.AppendLine($"log={_log}");
             configuracao.AppendLine($"baseControladora={_baseControladora}");
             configuracao.AppendLine($"usuarioBase={_usuarioBase}");
-            configuracao.AppendLine($"senhaBase={Util.Criptografia.Encrypt(_senhaBase,Util.Constantes.keyCripto,true).Replace("=","(***Igual***)")}");
+            configuracao.AppendLine($"senhaBase={Util.Criptografia.Encrypt(_senhaBase,Util.Constantes.keyCripto,true).Replace("=",replaceIgual)}");
+            configuracao.AppendLine($"pastaBaseVersionadora={_pastaBaseVersionadora}");
 
             Util.Arquivos.gravaArquivo(Util.Constantes.arquivoConfiguracao,configuracao.ToString());
         }

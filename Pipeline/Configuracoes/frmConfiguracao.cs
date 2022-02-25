@@ -34,8 +34,8 @@ namespace Configuracoes
             dgvScriptsJaAplicados.AllowUserToAddRows = false;
             dgvScriptsJaAplicados.ReadOnly = true;
 
-            foreach (Scripts item in config.arquivosScriptsAplicados.scripts)
-                dgvScriptsJaAplicados.Rows.Add(item.nomeArquivo);
+            //foreach (Scripts item in config.arquivosScriptsAplicados.scripts)
+            //    dgvScriptsJaAplicados.Rows.Add(item.nomeArquivo);
 
             dgvScriptsJaAplicados.Refresh();
         }
@@ -49,8 +49,8 @@ namespace Configuracoes
             dgvScriptsParaAplicar.AllowUserToAddRows = false;
             dgvScriptsParaAplicar.ReadOnly = true;
 
-            foreach (Scripts item in config.arquivosScriptsParaAplicar.scripts)
-                dgvScriptsParaAplicar.Rows.Add(item.nomeArquivo);
+            //foreach (Scripts item in config.arquivosScriptsParaAplicar.scripts)
+            //    dgvScriptsParaAplicar.Rows.Add(item.nomeArquivo);
 
             dgvScriptsParaAplicar.Refresh();
         }
@@ -64,8 +64,8 @@ namespace Configuracoes
             dgvScriptCompleto.AllowUserToAddRows = false;
             dgvScriptCompleto.ReadOnly = true;
 
-            foreach (Scripts item in config.arquivoScriptCompleto.scripts)
-                dgvScriptCompleto.Rows.Add(item.nomeArquivo);
+            //foreach (Scripts item in config.arquivoScriptCompleto.scripts)
+            //    dgvScriptCompleto.Rows.Add(item.nomeArquivo);
 
             dgvScriptCompleto.Refresh();
         }
@@ -79,35 +79,45 @@ namespace Configuracoes
         public void carregaConfiguracao()
         {
             // Carrega dados de configuração nos campos
-            config = new Configuracao();
+            try
+            {
+                config = new Configuracao();
 
-            txtBranch.Text = config.branch;
-            txtServidor.Text = config.connection;
-            txtScriptsParaAplicar.Text = config.aplicaScript;
-            txtScriptCompleto.Text = config.scriptCompleto;
-            txtScriptsAplicados.Text = config.scriptAplicado;
-            txtLog.Text = config.log;
-            txtBaseVersionadora.Text = config.baseControladora;
-            txtUsuarioBase.Text = config.usuarioBase;
-            txtSenhaBase.Text = config.senhaBase;
+                txtBranch.Text = config.branch;
+                txtServidor.Text = config.connection;
+                txtScriptsParaAplicar.Text = config.aplicaScript;
+                txtScriptCompleto.Text = config.scriptCompleto;
+                txtScriptsAplicados.Text = config.scriptAplicado;
+                txtLog.Text = config.log;
+                txtBaseVersionadora.Text = Configuracao.baseControladora;
+                txtUsuarioBase.Text = config.usuarioBase;
+                txtSenhaBase.Text = config.senhaBase;
+                txtPastaBaseVersionadora.Text = config.pastaBaseVersionadora;
 
-            carregaDataGridViewScriptsJaAplicados();
-            carregaDataGridViewScriptsParaAplicar();
-            carregaDataGridViewScriptCompleto();
+                carregaDataGridViewScriptsJaAplicados();
+                carregaDataGridViewScriptsParaAplicar();
+                carregaDataGridViewScriptCompleto();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar as configurações." + ex.Message);
+            }
+            
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             Configuracao.salvarConfiguracao
-                (txtBranch.Text, 
-                txtServidor.Text, 
-                txtScriptsParaAplicar.Text, 
-                txtScriptCompleto.Text, 
-                txtScriptsAplicados.Text, 
-                txtLog.Text, 
+                (txtBranch.Text,
+                txtServidor.Text,
+                txtScriptsParaAplicar.Text,
+                txtScriptCompleto.Text,
+                txtScriptsAplicados.Text,
+                txtLog.Text,
                 txtBaseVersionadora.Text,
-                txtUsuarioBase.Text, 
-                txtSenhaBase.Text);
+                txtUsuarioBase.Text,
+                txtSenhaBase.Text,
+                txtPastaBaseVersionadora.Text);
 
             carregaConfiguracao();
             acao = false;
@@ -174,6 +184,12 @@ namespace Configuracoes
         {
             carregaConfiguracao();
             acao = false;
+            verificaBotaoSalvar();
+        }
+
+        private void txtPastaBaseVersionadora_TextChanged(object sender, EventArgs e)
+        {
+            acao = true;
             verificaBotaoSalvar();
         }
     }
