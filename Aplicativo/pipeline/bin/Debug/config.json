@@ -1,0 +1,12 @@
+{
+"branch":""
+,"connection":"DESKTOP-SCVFDSG/SQL2019A"
+,"aplicaScript":"Devops/Pendentes"
+,"scriptCompleto":"Devops/Completo"
+,"scriptAplicado":"Devops/Executados"
+,"log":"Devops/Log"
+,"baseControladora":"ControlDBDevops"
+,"usuarioBase":"aplicaDevops"
+,"senhaBase":"NPXmjuM0x5X4W7cVeIuBVg=="
+,"pastaBaseVersionadora":"Devops/Controle"
+}
