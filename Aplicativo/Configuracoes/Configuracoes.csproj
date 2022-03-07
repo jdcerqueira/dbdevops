@@ -52,10 +52,19 @@
     <Compile Include="frmConfiguracao.Designer.cs">
       <DependentUpon>frmConfiguracao.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMonitoracao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMonitoracao.Designer.cs">
+      <DependentUpon>frmMonitoracao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmConfiguracao.resx">
       <DependentUpon>frmConfiguracao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMonitoracao.resx">
+      <DependentUpon>frmMonitoracao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -80,6 +89,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\pipeline-core-ControlDBDevops\pipeline-core-ControlDBDevops.csproj">
+      <Project>{07f65cbd-515a-43d3-89db-3cde31bf0028}</Project>
+      <Name>pipeline-core-ControlDBDevops</Name>
+    </ProjectReference>
     <ProjectReference Include="..\pipeline-core\pipeline-core.csproj">
       <Project>{03dfb058-f072-4e2a-8dd7-21a40c0a18ba}</Project>
       <Name>pipeline-core</Name>

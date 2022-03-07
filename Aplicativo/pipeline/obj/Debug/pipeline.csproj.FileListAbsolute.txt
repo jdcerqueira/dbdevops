@@ -98,3 +98,14 @@ E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\System.Security.AccessControl.x
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\System.Security.Permissions.xml
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\System.Security.Principal.Windows.xml
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\System.Text.Encodings.Web.xml
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-log.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-dao.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-log.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-dao.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-dao.dll.config
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-ControlDBDevops.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-ControlDBDevops.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-ControlDBDevops.dll.config
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-util.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-util.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline\obj\Debug\pipeline.csproj.CopyComplete

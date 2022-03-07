@@ -1,0 +1,9 @@
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\bin\Debug\pipeline-core-util.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\bin\Debug\pipeline-core-util.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\bin\Debug\pipeline-core-log.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\bin\Debug\pipeline-core-log.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\obj\Debug\pipeline-core-util.csproj.AssemblyReference.cache
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\obj\Debug\pipeline-core-util.csproj.CoreCompileInputs.cache
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\obj\Debug\pipeline-core-util.csproj.CopyComplete
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\obj\Debug\pipeline-core-util.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core-util\obj\Debug\pipeline-core-util.pdb

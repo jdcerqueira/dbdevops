@@ -16,7 +16,8 @@ namespace Configuracoes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmConfiguracao());
+            //Application.Run(new frmConfiguracao());
+            Application.Run(new frmMonitoracao());
         }
     }
 }

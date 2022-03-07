@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using pipeline_core;
 using Microsoft.Data.SqlClient;
+using pipeline_core_log;
+using pipeline_core_dao;
 
 namespace pipeline
 {
@@ -18,12 +20,8 @@ namespace pipeline
              * Após o ajuste no ambiente, tornando o ambiente confiável as versões já existentes na base de dados, iremos para o fluxo de aplicar os scripts pendentes.
              * 
              */
-
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "validaBaseVersionadora", "" });
-            validaBaseVersionadora(_configuracao);
-
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "GetDctBasesVersoes()", "" });
-            this.versoesMaxAplicadasBaseVersionadora = _configuracao.GetDctBasesVersoes();
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.Info.versoesPorBase()", "" });
+            this.versoesMaxAplicadasBaseVersionadora = pipeline_core_ControlDBDevops.ControlDBDevops.Info.versoesPorBase();
 
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "GetDctScriptsExecutados()", "" });
             this.versoesMaxAplicadasScriptsExecutados = _configuracao.GetDctScriptsExecutados();
@@ -39,8 +37,8 @@ namespace pipeline
         {
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "?", $"Aplicará os scripts na pasta {_configuracao.aplicaScript}." });
 
-            foreach (Scripts script in Scripts.GetScripts(_configuracao.aplicaScript))
-                Scripts.aplicaScript(script, _configuracao, true);
+            foreach (Scripts script in Scripts.GetScripts(new String[] { _configuracao.aplicaScript }))
+                Scripts.aplicaScript(script, _configuracao);
         }
 
         private void aplicaScriptsPastaAplicados(Configuracao _configuracao)
@@ -50,15 +48,14 @@ namespace pipeline
             foreach (var item in this.versoesMaxAplicadasScriptsExecutados)
             {
                 if (!this.versoesMaxAplicadasBaseVersionadora.ContainsKey(item.Key))
-                    foreach (Scripts script in Scripts.GetScripts(_configuracao.scriptAplicado, item.Key))
-                        Scripts.aplicaScript(script, _configuracao);
+                    foreach (Scripts script in Scripts.GetScripts(new String[] { _configuracao.scriptAplicado }, item.Key))
+                        Scripts.aplicaScript(script);
                 else
                     if (this.versoesMaxAplicadasBaseVersionadora[item.Key] < item.Value)
-                    foreach (Scripts script in Scripts.GetScripts(_configuracao.scriptAplicado, item.Key))
+                    foreach (Scripts script in Scripts.GetScripts(new String[] { _configuracao.scriptAplicado }, item.Key))
                     {
-                        Scripts.Info info = new Scripts.Info(script);
-                        if (info.versao > this.versoesMaxAplicadasBaseVersionadora[item.Key])
-                            Scripts.aplicaScript(script, _configuracao);
+                        if (script.info.versao > this.versoesMaxAplicadasBaseVersionadora[item.Key])
+                            Scripts.aplicaScript(script);
                     }
             }
         }
@@ -81,11 +78,12 @@ namespace pipeline
 
         private Boolean existeBaseVersionadora(Configuracao _configuracao)
         {
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "executaResultSet", Util.Constantes.QueriesEstaticas.verificaBaseControladora() });
-            SqlDataReader result = new DAO(_configuracao).executaResultSet(Util.Constantes.QueriesEstaticas.verificaBaseControladora(), false);
-            if (result.Read())
-                if (result[0].ToString() != "")
-                    return true;
+            //Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "executaResultSet", pipeline_core_util.Constantes.QueriesEstaticas.verificaBaseControladora() });
+            // SqlDataReader result = new DAO(_configuracao).executaResultSet(Util.Constantes.QueriesEstaticas.verificaBaseControladora(), false);
+
+            //if (result.Read())
+            //    if (result[0].ToString() != "")
+            //        return true;
 
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "", "Não foi encontrada a base de dados versionadora." });
             return false;
@@ -93,8 +91,8 @@ namespace pipeline
 
         private void criaBaseControladora(Configuracao _configuracao)
         {
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Criação da base versionadora - {_configuracao.pastaBaseVersionadora}\\{Util.Constantes.arquivoScriptBaseVersionadora}" });
-            new DAO(_configuracao).executaArquivoScript($"{ _configuracao.pastaBaseVersionadora}\\{ Util.Constantes.arquivoScriptBaseVersionadora}", false);
+            //Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Criação da base versionadora - {_configuracao.pastaBaseVersionadora}\\{Util.Constantes.arquivoScriptBaseVersionadora}" });
+            //new DAO(_configuracao).executaArquivoScript($"{ _configuracao.pastaBaseVersionadora}\\{ Util.Constantes.arquivoScriptBaseVersionadora}", false);
         }
     }
 }

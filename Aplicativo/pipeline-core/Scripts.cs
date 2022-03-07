@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using pipeline_core_log;
+using pipeline_core_dao;
+using pipeline_core_ControlDBDevops;
 
 namespace pipeline_core
 {
     public class Scripts
     {
-        public String nomeArquivo { get; set; }
-        public String caminhoArquivo { get; set; }
+        public String nomeArquivo;
+        public String caminhoArquivo;
+        public Info info;
+
+        public static String MsgErro = "";
+        public static Boolean Ok = true;
+
+        public Scripts(String _nomeArquivo, String _caminhoArquivo)
+        {
+            this.nomeArquivo = _nomeArquivo;
+            this.caminhoArquivo = _caminhoArquivo;
+            this.info = new Scripts.Info(this);
+        }
 
         public class Info
         {
@@ -21,36 +35,34 @@ namespace pipeline_core
             }
         }
 
-        public static void aplicaScript(Scripts script, Configuracao configuracao)
+        public static void aplicaScript(Scripts script)
         {
-            Scripts.Info info = new Scripts.Info(script);
-            DAO executaScript = new DAO(configuracao);
+            //DAO executaScript = new DAO(configuracao);
 
-            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Aplicando o script {script.caminhoArquivo}" });
-            executaScript.executaArquivoScript(script.caminhoArquivo, false);
+            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "Queries.ExecuteScriptFile", $"Aplicando o script {script.caminhoArquivo}" });
+            Queries.ExecuteScriptFile(ControlDBDevops.connectionMaster, pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo));
 
-            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
-            executaScript.executaQuery($"exec dbo.pRegisterNewVersion {info.versao},'{info.baseDados}','{Configuracao.loginControladora}',null,'{script.caminhoArquivo}','{Util.Criptografia.Encrypt(File.ReadAllText(script.caminhoArquivo), Util.Constantes.keyCripto, true)}'", true);
+            Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.registraVersaoBaseDados", ""});
+            ControlDBDevops.registraVersaoBaseDados(script.info.versao, script.info.baseDados, script.caminhoArquivo, pipeline_core_util.Criptografia.Encrypt(pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo), pipeline_core_util.Constantes.keyCripto,true));
         }
 
-        public static void aplicaScript(Scripts script, Configuracao configuracao, Boolean isPendente)
+        public static void aplicaScript(Scripts script, Configuracao configuracao)
         {
             try
             {
-                Scripts.Info info = new Scripts.Info(script);
-                DAO executaScript = new DAO(configuracao);
+                //DAO executaScript = new DAO(configuracao);
 
-                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaArquivoScript", $"Aplicando o script {script.caminhoArquivo}" });
-                executaScript.executaArquivoScript(script.caminhoArquivo, false);
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "Queries.ExecuteScriptFile", $"Aplicando o script {script.caminhoArquivo}" });
+                Queries.ExecuteScriptFile(ControlDBDevops.connectionMaster, pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo));
 
-                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "executaQuery", $"Aplicando o script exec dbo.pRegisterNewVersion" });
-                executaScript.executaQuery($"exec dbo.pRegisterNewVersion {info.versao},'{info.baseDados}','{Configuracao.loginControladora}',null,'{script.caminhoArquivo}','{Util.Criptografia.Encrypt(File.ReadAllText(script.caminhoArquivo), Util.Constantes.keyCripto, true)}'", true);
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.registraVersaoBaseDados", $"" });
+                ControlDBDevops.registraVersaoBaseDados(script.info.versao, script.info.baseDados, script.caminhoArquivo, pipeline_core_util.Criptografia.Encrypt(pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo), pipeline_core_util.Constantes.keyCripto, true));
 
-                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "complementaArquivo", $"Irá complementar o arquivo de script completo" });
-                Util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{Util.Constantes.arquivoScriptCompleto}");
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "pipeline_core_util.Arquivos.complementaArquivo", $"Irá complementar o arquivo de script completo" });
+                pipeline_core_util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{pipeline_core_util.Constantes.arquivoScriptCompleto}");
 
-                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "moveArquivo", $"{script.nomeArquivo} -> {configuracao.scriptAplicado}" });
-                Util.Arquivos.moveArquivo(script.caminhoArquivo, $"{configuracao.scriptAplicado}\\{script.nomeArquivo}");
+                Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "pipeline_core_util.Arquivos.moveArquivo", $"{script.nomeArquivo} -> {configuracao.scriptAplicado}" });
+                pipeline_core_util.Arquivos.moveArquivo(script.caminhoArquivo, $"{configuracao.scriptAplicado}\\{script.nomeArquivo}");
             }
             catch (Exception ex)
             {
@@ -60,33 +72,65 @@ namespace pipeline_core
         }
 
 
-        public static List<Scripts> GetScripts(String Caminho)
+        public static List<Scripts> GetScripts(String[] Caminho)
         {
             List<Scripts> scripts = new List<Scripts>();
 
-            foreach (FileInfo arquivo in Util.Arquivos.listaArquivosPasta(Caminho))
+            for (int i = 0; i < Caminho.Length; i++)
             {
-                Scripts script = new Scripts() { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName };
-                Scripts.Info info = new Scripts.Info(script);
-                scripts.Add(script);
+                foreach (FileInfo arquivo in pipeline_core_util.Arquivos.listaArquivosPasta(Caminho[i]))
+                {
+                    Scripts script = new Scripts(arquivo.Name, arquivo.FullName);
+                    if(!scripts.Exists(x=>x.nomeArquivo == script.nomeArquivo))
+                        scripts.Add(script);
+                }
             }
 
             return scripts;
         }
 
-        public static List<Scripts> GetScripts(String Caminho, String BaseDados)
+        public static List<Scripts> GetScripts(String[] Caminho, String BaseDados)
         {
             List<Scripts> scripts = new List<Scripts>();
 
-            foreach (FileInfo arquivo in Util.Arquivos.listaArquivosPasta(Caminho))
+            for (int i = 0; i < Caminho.Length; i++)
             {
-                Scripts script = new Scripts() { nomeArquivo = arquivo.Name, caminhoArquivo = arquivo.FullName };
-                Scripts.Info info = new Scripts.Info(script);
-                if (info.baseDados == BaseDados)
-                    scripts.Add(script);
+                foreach (FileInfo arquivo in pipeline_core_util.Arquivos.listaArquivosPasta(Caminho[i]))
+                {
+                    Scripts script = new Scripts(arquivo.Name, arquivo.FullName);
+                    if (script.info.baseDados == BaseDados && !scripts.Exists(x=>x.nomeArquivo == script.nomeArquivo))
+                        scripts.Add(script);
+                }
             }
 
             return scripts;
+        }
+
+        public static List<String> GetBases(String[] Caminho)
+        {
+
+            List<String> retorno = new List<String>();
+
+            for (int i = 0; i < Caminho.Length; i++)
+            {
+                foreach (FileInfo arquivo in pipeline_core_util.Arquivos.listaArquivosPasta(Caminho[i]))
+                {
+                    Scripts script = new Scripts(arquivo.Name, arquivo.FullName);
+                    if (!retorno.Contains(script.info.baseDados))
+                        retorno.Add(script.info.baseDados);
+                }
+            }
+
+            return retorno;
+        }
+
+        public static int[] GetVersoesBases(List<Scripts> scripts)
+        {
+            int[] retorno = new int[scripts.Count];
+            for (int i = 0; i < scripts.Count; i++)
+                retorno[i] = scripts[i].info.versao;
+
+            return retorno;
         }
     }
 }

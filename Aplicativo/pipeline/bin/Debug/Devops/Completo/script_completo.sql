@@ -1,4 +1,4 @@
--- 25/02/2022 18:28:41 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v1_FINANCAS.sql ****
+-- 06/03/2022 22:29:04 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v1_FINANCAS.sql ****
 USE master
 GO
 
@@ -15,7 +15,7 @@ GO
 ALTER DATABASE [FINANCAS] SET ALLOW_SNAPSHOT_ISOLATION ON
 GO
 
--- 25/02/2022 18:28:41 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v2_FINANCAS.sql ****
+-- 06/03/2022 22:29:04 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v2_FINANCAS.sql ****
 USE [FINANCAS]
 GO
 
@@ -70,7 +70,7 @@ GO
 GRANT EXECUTE ON SCHEMA :: [lancamentos] TO [Client]
 GO
 
--- 25/02/2022 18:28:41 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v3_FINANCAS.sql ****
+-- 06/03/2022 22:29:04 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v3_FINANCAS.sql ****
 USE [FINANCAS]
 GO
 
@@ -160,7 +160,7 @@ CREATE TABLE dbo.Movimentacao
 )
 GO
 
--- 25/02/2022 18:28:41 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v4_FINANCAS.sql ****
+-- 06/03/2022 22:29:04 **** Script aplicado - E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\Devops\Pendentes\v4_FINANCAS.sql ****
 USE [FINANCAS]
 GO
 

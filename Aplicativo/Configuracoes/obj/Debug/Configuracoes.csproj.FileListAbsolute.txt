@@ -79,7 +79,6 @@ E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pt-BR\Microsoft.Data.SqlCl
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\ru\Microsoft.Data.SqlClient.resources.dll
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\zh-Hans\Microsoft.Data.SqlClient.resources.dll
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\zh-Hant\Microsoft.Data.SqlClient.resources.dll
-E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.exe.config
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.Properties.Resources.resources
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.GenerateResource.cache
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.CoreCompileInputs.cache
@@ -88,5 +87,18 @@ E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.pdb
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.AssemblyReference.cache
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\Newtonsoft.Json.dll
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\Newtonsoft.Json.xml
-E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.CopyComplete
 E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.frmConfiguracao.resources
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.frmMonitoracao.resources
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-log.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-dao.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-log.pdb
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-dao.pdb
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-dao.dll.config
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-ControlDBDevops.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-ControlDBDevops.pdb
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-ControlDBDevops.dll.config
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\System.Text.Encodings.Web.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\System.Text.Encodings.Web.xml
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\obj\Debug\Configuracoes.csproj.CopyComplete
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-util.dll
+E:\GitHub\dbdevops\Aplicativo\Configuracoes\bin\Debug\pipeline-core-util.pdb

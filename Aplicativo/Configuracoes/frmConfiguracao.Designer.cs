@@ -52,23 +52,7 @@ namespace Configuracoes
             this.label1 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tabControleScripts = new System.Windows.Forms.TabControl();
-            this.tabScriptsAplicar = new System.Windows.Forms.TabPage();
-            this.dgvScriptsParaAplicar = new System.Windows.Forms.DataGridView();
-            this.tabScriptsJaAplicados = new System.Windows.Forms.TabPage();
-            this.dgvScriptsJaAplicados = new System.Windows.Forms.DataGridView();
-            this.tabScriptCompleto = new System.Windows.Forms.TabPage();
-            this.dgvScriptCompleto = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.tabControleScripts.SuspendLayout();
-            this.tabScriptsAplicar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsParaAplicar)).BeginInit();
-            this.tabScriptsJaAplicados.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).BeginInit();
-            this.tabScriptCompleto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -274,7 +258,7 @@ namespace Configuracoes
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(628, 270);
+            this.btnSalvar.Location = new System.Drawing.Point(228, 270);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 9;
@@ -284,7 +268,7 @@ namespace Configuracoes
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(713, 270);
+            this.btnCancelar.Location = new System.Drawing.Point(311, 270);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 10;
@@ -292,100 +276,11 @@ namespace Configuracoes
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tabControleScripts);
-            this.groupBox2.Location = new System.Drawing.Point(414, 13);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(374, 251);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            // 
-            // tabControleScripts
-            // 
-            this.tabControleScripts.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.tabControleScripts.Controls.Add(this.tabScriptsAplicar);
-            this.tabControleScripts.Controls.Add(this.tabScriptsJaAplicados);
-            this.tabControleScripts.Controls.Add(this.tabScriptCompleto);
-            this.tabControleScripts.Location = new System.Drawing.Point(6, 12);
-            this.tabControleScripts.Multiline = true;
-            this.tabControleScripts.Name = "tabControleScripts";
-            this.tabControleScripts.SelectedIndex = 0;
-            this.tabControleScripts.Size = new System.Drawing.Size(362, 233);
-            this.tabControleScripts.TabIndex = 0;
-            // 
-            // tabScriptsAplicar
-            // 
-            this.tabScriptsAplicar.Controls.Add(this.dgvScriptsParaAplicar);
-            this.tabScriptsAplicar.Location = new System.Drawing.Point(4, 4);
-            this.tabScriptsAplicar.Name = "tabScriptsAplicar";
-            this.tabScriptsAplicar.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScriptsAplicar.Size = new System.Drawing.Size(354, 207);
-            this.tabScriptsAplicar.TabIndex = 0;
-            this.tabScriptsAplicar.Text = "Scripts para Aplicar";
-            this.tabScriptsAplicar.UseVisualStyleBackColor = true;
-            // 
-            // dgvScriptsParaAplicar
-            // 
-            this.dgvScriptsParaAplicar.AllowUserToAddRows = false;
-            this.dgvScriptsParaAplicar.AllowUserToDeleteRows = false;
-            this.dgvScriptsParaAplicar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvScriptsParaAplicar.Location = new System.Drawing.Point(6, 6);
-            this.dgvScriptsParaAplicar.Name = "dgvScriptsParaAplicar";
-            this.dgvScriptsParaAplicar.ReadOnly = true;
-            this.dgvScriptsParaAplicar.Size = new System.Drawing.Size(342, 195);
-            this.dgvScriptsParaAplicar.TabIndex = 1;
-            // 
-            // tabScriptsJaAplicados
-            // 
-            this.tabScriptsJaAplicados.Controls.Add(this.dgvScriptsJaAplicados);
-            this.tabScriptsJaAplicados.Location = new System.Drawing.Point(4, 4);
-            this.tabScriptsJaAplicados.Name = "tabScriptsJaAplicados";
-            this.tabScriptsJaAplicados.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScriptsJaAplicados.Size = new System.Drawing.Size(354, 207);
-            this.tabScriptsJaAplicados.TabIndex = 2;
-            this.tabScriptsJaAplicados.Text = "Scripts já Aplicados";
-            this.tabScriptsJaAplicados.UseVisualStyleBackColor = true;
-            // 
-            // dgvScriptsJaAplicados
-            // 
-            this.dgvScriptsJaAplicados.AllowUserToAddRows = false;
-            this.dgvScriptsJaAplicados.AllowUserToDeleteRows = false;
-            this.dgvScriptsJaAplicados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvScriptsJaAplicados.Location = new System.Drawing.Point(6, 6);
-            this.dgvScriptsJaAplicados.Name = "dgvScriptsJaAplicados";
-            this.dgvScriptsJaAplicados.ReadOnly = true;
-            this.dgvScriptsJaAplicados.Size = new System.Drawing.Size(342, 195);
-            this.dgvScriptsJaAplicados.TabIndex = 1;
-            // 
-            // tabScriptCompleto
-            // 
-            this.tabScriptCompleto.Controls.Add(this.dgvScriptCompleto);
-            this.tabScriptCompleto.Location = new System.Drawing.Point(4, 4);
-            this.tabScriptCompleto.Name = "tabScriptCompleto";
-            this.tabScriptCompleto.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScriptCompleto.Size = new System.Drawing.Size(354, 207);
-            this.tabScriptCompleto.TabIndex = 1;
-            this.tabScriptCompleto.Text = "Script Completo";
-            this.tabScriptCompleto.UseVisualStyleBackColor = true;
-            // 
-            // dgvScriptCompleto
-            // 
-            this.dgvScriptCompleto.AllowUserToAddRows = false;
-            this.dgvScriptCompleto.AllowUserToDeleteRows = false;
-            this.dgvScriptCompleto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvScriptCompleto.Location = new System.Drawing.Point(6, 6);
-            this.dgvScriptCompleto.Name = "dgvScriptCompleto";
-            this.dgvScriptCompleto.ReadOnly = true;
-            this.dgvScriptCompleto.Size = new System.Drawing.Size(342, 195);
-            this.dgvScriptCompleto.TabIndex = 0;
-            // 
             // frmConfiguracao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 302);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(398, 302);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.groupBox1);
@@ -396,14 +291,6 @@ namespace Configuracoes
             this.Text = "Configuração";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.tabControleScripts.ResumeLayout(false);
-            this.tabScriptsAplicar.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsParaAplicar)).EndInit();
-            this.tabScriptsJaAplicados.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptsJaAplicados)).EndInit();
-            this.tabScriptCompleto.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScriptCompleto)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -413,7 +300,6 @@ namespace Configuracoes
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtSenhaBase;
         private System.Windows.Forms.TextBox txtUsuarioBase;
         private System.Windows.Forms.TextBox txtBaseVersionadora;
@@ -432,13 +318,6 @@ namespace Configuracoes
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl tabControleScripts;
-        private System.Windows.Forms.TabPage tabScriptsAplicar;
-        private System.Windows.Forms.TabPage tabScriptCompleto;
-        private System.Windows.Forms.TabPage tabScriptsJaAplicados;
-        private System.Windows.Forms.DataGridView dgvScriptsParaAplicar;
-        private System.Windows.Forms.DataGridView dgvScriptCompleto;
-        private System.Windows.Forms.DataGridView dgvScriptsJaAplicados;
         private System.Windows.Forms.TextBox txtPastaBaseVersionadora;
         private System.Windows.Forms.Label label10;
     }

@@ -150,3 +150,14 @@ E:\GitHub\dbdevops\Aplicativo\pipeline-core\obj\Debug\pipeline-core.csproj.Assem
 E:\GitHub\dbdevops\Aplicativo\pipeline-core\obj\Debug\pipeline-core.csproj.CoreCompileInputs.cache
 E:\GitHub\dbdevops\Aplicativo\pipeline-core\obj\Debug\pipeline-core.dll
 E:\GitHub\dbdevops\Aplicativo\pipeline-core\obj\Debug\pipeline-core.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-dao.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-log.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-dao.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-dao.dll.config
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-log.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-ControlDBDevops.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-util.dll
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-ControlDBDevops.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-ControlDBDevops.dll.config
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\bin\Debug\pipeline-core-util.pdb
+E:\GitHub\dbdevops\Aplicativo\pipeline-core\obj\Debug\pipeline-core.csproj.CopyComplete

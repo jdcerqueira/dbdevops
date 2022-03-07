@@ -178,6 +178,22 @@
       <Project>{ce19e9ae-3a6e-40d0-919b-e59231a33015}</Project>
       <Name>Configuracoes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\pipeline-core-ControlDBDevops\pipeline-core-ControlDBDevops.csproj">
+      <Project>{07f65cbd-515a-43d3-89db-3cde31bf0028}</Project>
+      <Name>pipeline-core-ControlDBDevops</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pipeline-core-dao\pipeline-core-dao.csproj">
+      <Project>{2838b38b-ad46-4ede-b594-1acff5f4120b}</Project>
+      <Name>pipeline-core-dao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pipeline-core-log\pipeline-core-log.csproj">
+      <Project>{ca646078-fdd0-4df3-8ba0-079adac8337c}</Project>
+      <Name>pipeline-core-log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pipeline-core-util\pipeline-core-util.csproj">
+      <Project>{1377c1b7-70a2-4bcd-81b7-5792ced61b7e}</Project>
+      <Name>pipeline-core-util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\pipeline-core\pipeline-core.csproj">
       <Project>{03dfb058-f072-4e2a-8dd7-21a40c0a18ba}</Project>
       <Name>pipeline-core</Name>
