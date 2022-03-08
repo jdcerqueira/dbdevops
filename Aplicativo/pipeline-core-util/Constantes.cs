@@ -6,6 +6,6 @@ namespace pipeline_core_util
     {
         public const String arquivoConfiguracao = "config.json";
         public const String keyCripto = "%jth$@lwmk";
-        public const String arquivoScriptCompleto = "script_completo.sql";
+        public const String arquivoScriptCompleto = "script_completo_<database>.sql";
     }
 }

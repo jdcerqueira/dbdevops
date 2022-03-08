@@ -108,4 +108,3 @@ E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-ControlDBDevops.p
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-ControlDBDevops.dll.config
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-util.dll
 E:\GitHub\dbdevops\Aplicativo\pipeline\bin\Debug\pipeline-core-util.pdb
-E:\GitHub\dbdevops\Aplicativo\pipeline\obj\Debug\pipeline.csproj.CopyComplete

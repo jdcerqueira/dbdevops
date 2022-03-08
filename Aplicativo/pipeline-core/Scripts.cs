@@ -25,13 +25,18 @@ namespace pipeline_core
 
         public class Info
         {
-            public String baseDados;
+            public String baseDados = "";
             public int versao;
 
             public Info(Scripts _script)
             {
-                this.baseDados = _script.nomeArquivo.Split('_')[1].Replace(".sql", "");
-                this.versao = Int32.Parse(_script.nomeArquivo.Split('_')[0].Replace("v", ""));
+                String[] script_part = _script.nomeArquivo.Split('_');
+
+                for (int i = 1; i < script_part.Length; i++)
+                    this.baseDados += (i>1 ? "_" : "") + script_part[i];
+
+                this.baseDados = this.baseDados.Replace(".sql", "");
+                this.versao = Int32.Parse(script_part[0].Replace("v", ""));
             }
         }
 
@@ -50,8 +55,6 @@ namespace pipeline_core
         {
             try
             {
-                //DAO executaScript = new DAO(configuracao);
-
                 Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "Queries.ExecuteScriptFile", $"Aplicando o script {script.caminhoArquivo}" });
                 Queries.ExecuteScriptFile(ControlDBDevops.connectionMaster, pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo));
 
@@ -59,7 +62,7 @@ namespace pipeline_core
                 ControlDBDevops.registraVersaoBaseDados(script.info.versao, script.info.baseDados, script.caminhoArquivo, pipeline_core_util.Criptografia.Encrypt(pipeline_core_util.Arquivos.carregaConteudoArquivo(script.caminhoArquivo), pipeline_core_util.Constantes.keyCripto, true));
 
                 Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "pipeline_core_util.Arquivos.complementaArquivo", $"Irá complementar o arquivo de script completo" });
-                pipeline_core_util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{pipeline_core_util.Constantes.arquivoScriptCompleto}");
+                pipeline_core_util.Arquivos.complementaArquivo(script.caminhoArquivo, $@"{configuracao.scriptCompleto}\{pipeline_core_util.Constantes.arquivoScriptCompleto.Replace("<database>",script.info.baseDados)}");
 
                 Log.registraLog(new String[] { "Scripts", System.Reflection.MethodBase.GetCurrentMethod().Name, "pipeline_core_util.Arquivos.moveArquivo", $"{script.nomeArquivo} -> {configuracao.scriptAplicado}" });
                 pipeline_core_util.Arquivos.moveArquivo(script.caminhoArquivo, $"{configuracao.scriptAplicado}\\{script.nomeArquivo}");

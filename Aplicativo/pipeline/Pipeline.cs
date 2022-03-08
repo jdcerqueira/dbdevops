@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using pipeline_core;
-using Microsoft.Data.SqlClient;
 using pipeline_core_log;
-using pipeline_core_dao;
 
 namespace pipeline
 {
@@ -18,14 +16,7 @@ namespace pipeline
              * Neste trecho inicial, o pipeline irá organizar a base de dados controladora de versões.
              * Serão aplicadas as versões que deveriam já existir no servidor e na base de dados informada no script.
              * Após o ajuste no ambiente, tornando o ambiente confiável as versões já existentes na base de dados, iremos para o fluxo de aplicar os scripts pendentes.
-             * 
              */
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.Info.versoesPorBase()", "" });
-            this.versoesMaxAplicadasBaseVersionadora = pipeline_core_ControlDBDevops.ControlDBDevops.Info.versoesPorBase();
-
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "GetDctScriptsExecutados()", "" });
-            this.versoesMaxAplicadasScriptsExecutados = _configuracao.GetDctScriptsExecutados();
-
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "aplicaScriptsPastaAplicados", "" });
             aplicaScriptsPastaAplicados(_configuracao);
 
@@ -38,15 +29,22 @@ namespace pipeline
             Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "?", $"Aplicará os scripts na pasta {_configuracao.aplicaScript}." });
 
             foreach (Scripts script in Scripts.GetScripts(new String[] { _configuracao.aplicaScript }))
-                Scripts.aplicaScript(script, _configuracao);
+                if(Int32.Parse(this.versoesMaxAplicadasBaseVersionadora[script.info.baseDados].ToString()) < script.info.versao)
+                    Scripts.aplicaScript(script, _configuracao);
+                else
+                    Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ERROR", $"Versão do script inválida {script.nomeArquivo}." });
         }
 
         private void aplicaScriptsPastaAplicados(Configuracao _configuracao)
         {
-            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "aplicaScript", $"Aplicará os scripts na pasta {_configuracao.scriptAplicado}." });
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.Info.versoesPorBase()", "versoesMaxAplicadasBaseVersionadora" });
+            this.versoesMaxAplicadasBaseVersionadora = pipeline_core_ControlDBDevops.ControlDBDevops.Info.versoesPorBase();
 
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "GetDctScriptsExecutados()", "versoesMaxAplicadasScriptsExecutados" });
+            this.versoesMaxAplicadasScriptsExecutados = _configuracao.GetDctScriptsExecutados();
+
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "aplicaScript", $"Aplicará os scripts na pasta {_configuracao.scriptAplicado}." });
             foreach (var item in this.versoesMaxAplicadasScriptsExecutados)
-            {
                 if (!this.versoesMaxAplicadasBaseVersionadora.ContainsKey(item.Key))
                     foreach (Scripts script in Scripts.GetScripts(new String[] { _configuracao.scriptAplicado }, item.Key))
                         Scripts.aplicaScript(script);
@@ -57,7 +55,10 @@ namespace pipeline
                         if (script.info.versao > this.versoesMaxAplicadasBaseVersionadora[item.Key])
                             Scripts.aplicaScript(script);
                     }
-            }
+
+
+            Log.registraLog(new String[] { this.GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name, "ControlDBDevops.Info.versoesPorBase()", "Atualiza o contador após aplicar os scripts já executados." });
+            this.versoesMaxAplicadasBaseVersionadora = pipeline_core_ControlDBDevops.ControlDBDevops.Info.versoesPorBase();
         }
 
         private void validaBaseVersionadora(Configuracao _configuracao)
